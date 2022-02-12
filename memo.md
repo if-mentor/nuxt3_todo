@@ -1,1 +1,1 @@
-smaple
+sample
