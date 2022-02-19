@@ -1,3 +1,3 @@
 <template>
-    <h1>wwwwwwww</h1>
+    <h1>作成</h1>
 </template>
