@@ -1,7 +1,7 @@
 <template>
 
   <header class="bg-gray-500 py-5">
-    <div class="ml-12 text-white text-3xl">Todoアプリ</div>
+    <h1 class="ml-12 text-white text-3xl">Todoアプリ</h1>
   </header>
     <div class="container mx-auto mt-20">
       <div class="table w-auto h-auto">
