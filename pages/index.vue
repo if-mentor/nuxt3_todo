@@ -5,7 +5,7 @@
 
   <div class="flex mt-10 ml-5">
     <p class="text-xl">進行中のタスクは<span class="text-pink-500">3個</span>あります</p>
-    <button class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70">タスクを追加</button>
+    <button class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70">＋ タスクを追加</button>
   </div>
 
   <div class="flex mt-10 ml-5">
