@@ -34,9 +34,7 @@ const todos = [
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
             v-for="(item, index) in items"
             :key="index"
-          >
-            {{ item }}
-          </div>
+          >{{ item }}</div>
         </div>
       </div>
 
@@ -47,9 +45,9 @@ const todos = [
             <span class="text-blue-500">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
-            <button
-              class="w-20px h-20px ml-3 border-2 font-medium text-sm text-gray-500 rounded"
-            ></button>
+            <button class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded">
+              <Icon name="Pencil" solid />
+            </button>
           </div>
           <div class="table-cell">
             <div
@@ -60,9 +58,7 @@ const todos = [
                 todo.status === '着手前' ? 'bg-orange-100' : '',
                 todo.status === '着手前' ? 'text-orange-700' : '',
               ]"
-            >
-              {{ todo.status }}
-            </div>
+            >{{ todo.status }}</div>
           </div>
           <div class="table-cell">
             <div class="flex justify-center items-center">
@@ -79,16 +75,12 @@ const todos = [
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">
-                2021-11-8 18:55:07
-              </p>
+              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
             </div>
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">
-                2021-11-8 18:55:07
-              </p>
+              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
             </div>
           </div>
         </div>
