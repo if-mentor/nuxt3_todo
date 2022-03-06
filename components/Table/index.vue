@@ -45,7 +45,9 @@ const todos = [
             <span class="text-blue-500">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
-            <button class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded">
+            <button
+              class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
+            >
               <Icon name="Pencil" solid />
             </button>
           </div>
