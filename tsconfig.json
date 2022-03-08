@@ -1,4 +1,12 @@
 {
   // https://v3.nuxtjs.org/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
+<<<<<<< HEAD
+=======
+  "compilerOptions": {
+    "types": [
+      "nuxt-windicss"
+    ]
+  }
+>>>>>>> e848a9c9b4c189a02453eb00b7ceb701a6b65fcf
 }
