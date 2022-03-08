@@ -4,7 +4,7 @@
   </header>
 
   <form class="pl-8">
-    <div class="mt-8 ml-4mx-auto">
+    <div class="mt-8 ml-4 mx-auto">
       <div class="table w-auto h-auto">
         <div class="table-row">
           <div class="table-cell p-4 border-b whitespace-nowrap">
@@ -45,3 +45,4 @@
     <!-- ボタンの色がwindiの標準色になかったため、近い色で代用 -->
   </div>
 </template>
+
