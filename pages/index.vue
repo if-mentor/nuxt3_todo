@@ -1,19 +1,26 @@
+
+
+  
 <template>
   <div>
-
     <header>
       <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">Todoアプリ</h1>
     </header>
 
     <div class="flex mt-10 ml-5">
-      <p class="text-xl">進行中のタスクは<span class="text-pink-500">3個</span>あります</p>
-      <button class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70">＋ タスクを追加</button>
+      <p class="text-xl">
+        進行中のタスクは
+        <span class="text-pink-500">3個</span>あります
+      </p>
+      <button
+        class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
+      >+ タスクを追加</button>
     </div>
 
     <div class="flex mt-10 ml-5">
       <div>
         <p>キーワード</p>
-        <input type="text" placeholder="キーワードを入力" class="border">
+        <input type="text" placeholder="キーワードを入力" class="border" />
       </div>
       <div class="ml-5">
         <p>ステータス</p>
@@ -34,5 +41,6 @@
         </select>
       </div>
     </div>
+    <Table />
   </div>
 </template>
