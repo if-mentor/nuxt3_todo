@@ -1,3 +1,3 @@
 <template>
-    <h1>wwwwwwww</h1>
+    <h1>いちらんひょうじ</h1>
 </template>
