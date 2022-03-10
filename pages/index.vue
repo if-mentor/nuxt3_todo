@@ -1,6 +1,3 @@
-
-
-  
 <template>
   <div>
     <header>
@@ -13,8 +10,11 @@
         <span class="text-pink-500">3個</span>あります
       </p>
       <button
-        class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
-      >+ タスクを追加</button>
+        class="flex text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
+      >
+        <Icon name="Plus" solid />
+        <p>タスクを追加</p>
+      </button>
     </div>
 
     <div class="flex mt-10 ml-5">
