@@ -1,7 +1,5 @@
-import { defineNuxtConfig } from 'nuxt3'
+import { defineNuxtConfig } from "nuxt3";
 
 export default defineNuxtConfig({
-  buildModules: [
-    'nuxt-windicss',
-  ],
-})
+  buildModules: ["nuxt-windicss", "nuxt-hero-icons"],
+});
