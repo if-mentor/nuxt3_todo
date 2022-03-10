@@ -23,6 +23,13 @@ const todos = [
     updateDate: "2021-11-8 18:55:07",
   },
 ];
+
+const router = useRouter()
+
+const moveDetailPage = () => {
+  console.log(router.currentRoute.value)
+  router.push('/detail')
+}
 </script>
 
 <template>
@@ -42,10 +49,10 @@ const todos = [
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
             <input type="checkbox" class="mx-2" />
-            <span class="text-blue-500">{{ todo.taskName }}</span>
+            <span class="text-blue-500" @click="moveDetailPage">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
-            <button
+            <button 
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
               <Icon name="Pencil" solid />
