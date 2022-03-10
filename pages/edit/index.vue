@@ -5,12 +5,12 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">タスク名</label>
                 <label class="w-1">:</label>
-                <input type="text" required class="basis-auto ml-10 w-auto">
+                <input type="text" required class="basis-auto ml-10 w-screen-sm">
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">内容</label>
                 <label class="w-1">:</label>
-                <textarea required class="basis-auto h-120px ml-10"></textarea>
+                <textarea required class="basis-auto h-120px ml-10 w-screen-sm"></textarea>
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">ステータス</label>
