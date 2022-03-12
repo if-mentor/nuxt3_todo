@@ -1,7 +1,16 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useTodos } from '~~/store/todos';
 
 const todos = useTodos()
+const router = useRouter()
+
+
+const todo = computed(() => {
+  return todos.todoGetters
+})
+
+
 </script>
 
 
@@ -9,9 +18,6 @@ const todos = useTodos()
 
 <template>
   <div>
-    <pre>{{todos}}</pre>
-    <button @click="todos.chnageTaskName()">chnage</button>
-    
     <header class="bg-gray-500 py-5">
       <h1 class="ml-12 text-white text-3xl">Todoアプリ</h1>
     </header>
@@ -23,7 +29,7 @@ const todos = useTodos()
               タスク名
               <span class="ml-15">:</span>
             </div>
-            <div class="table-cell pl-30 border-b-2">Netflixで気になるアニメを朝まで見続ける</div>
+            <div class="table-cell pl-30 border-b-2">{{ todo.taskName }}</div>
           </div>
 
           <div class="table-row">
@@ -41,7 +47,7 @@ const todos = useTodos()
               ステータス
               <span class="ml-13">:</span>
             </div>
-            <div class="table-cell border-b-2 pl-30">未着手</div>
+            <div class="table-cell border-b-2 pl-30">{{ todo.status }}</div>
           </div>
 
           <div class="table-row">
@@ -49,13 +55,14 @@ const todos = useTodos()
               優先度
               <span class="ml-20">:</span>
             </div>
-            <div class="table-cell border-b-2 pl-30">高</div>
+            <div class="table-cell border-b-2 pl-30">{{ todo.priority }}</div>
           </div>
         </div>
       </div>
 
       <div
         class="bg-gray-500 cursor-pointer inline-block p-2 float-right mt-10 text-white rounded-md"
+        @click="router.push('/')"
       >戻る</div>
     </div>
   </div>

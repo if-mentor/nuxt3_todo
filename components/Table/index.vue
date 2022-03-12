@@ -1,4 +1,8 @@
 <script setup>
+import { useTodos } from '~~/store/todos';
+
+const todosStore = useTodos()
+
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
 const todos = [
   {
@@ -26,8 +30,11 @@ const todos = [
 
 const router = useRouter()
 
-const moveDetailPage = () => {
-  console.log(router.currentRoute.value)
+const moveDetailPage = (index) => {
+  // console.log(router.currentRoute.value)
+  // console.log(todos[index])
+  todosStore.applySelectedTodo(todos[index])
+
   router.push('/detail')
 }
 </script>
@@ -45,14 +52,14 @@ const moveDetailPage = () => {
         </div>
       </div>
 
-      <div class="table-row-group" v-for="todo in todos" :key="todo.taskName">
+      <div class="table-row-group" v-for="(todo, index) in todos" :key="todo.taskName">
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
             <input type="checkbox" class="mx-2" />
-            <span class="text-blue-500" @click="moveDetailPage">{{ todo.taskName }}</span>
+            <span class="text-blue-500" @click="moveDetailPage(index)">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
-            <button 
+            <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
               <Icon name="Pencil" solid />
@@ -95,5 +102,6 @@ const moveDetailPage = () => {
         </div>
       </div>
     </div>
+
   </div>
 </template>

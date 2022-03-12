@@ -4,22 +4,30 @@ interface TodoState {
   taskName: String;
   status: String;
   priority: String;
-  createDate: String;
-  updateDate: String;
 }
 
 export const useTodos = defineStore("todos", {
   state: (): TodoState => ({
-    taskName: 'boo',
-    status: '',
-    priority: '',
-    createDate: '',
-    updateDate: '',
+    taskName: "",
+    status: "",
+    priority: "",
   }),
 
-  actions:{
-    chnageTaskName(){
-      this.taskName = 'foo'
-    }
-  }
+  getters: {
+    todoGetters() {
+      return {
+        taskName: this.taskName,
+        status: this.status,
+        priority: this.priority,
+      };
+    },
+  },
+
+  actions: {
+    applySelectedTodo(todo: TodoState) {
+      this.taskName = todo.taskName;
+      this.status = todo.status;
+      this.priority = todo.priority;
+    },
+  },
 });
