@@ -59,11 +59,16 @@ const todo = computed(() => {
           </div>
         </div>
       </div>
-
-      <div
-        class="bg-gray-500 cursor-pointer inline-block p-2 float-right mt-10 text-white rounded-md"
-        @click="router.push('/')"
-      >戻る</div>
+      <div class=" w-100% text-right">
+        <button
+          class="bg-gray-500 cursor-pointer p-2 mt-10 text-white rounded-md"
+          @click="router.push('/')"
+        >戻る</button>
+        <button
+          class="bg-gray-500 cursor-pointer p-2 mt-10 ml-5 text-white rounded-md"
+          @click="router.push('/edit')"
+        >編集</button>
+      </div>
     </div>
   </div>
 </template>
