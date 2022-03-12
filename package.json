@@ -13,5 +13,9 @@
   "volta": {
     "node": "14.18.3",
     "yarn": "1.22.17"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.1.8",
+    "pinia": "^2.0.11"
   }
 }

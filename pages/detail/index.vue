@@ -1,5 +1,17 @@
+<script setup lang="ts">
+import { useTodos } from '~~/store/todos';
+
+const todos = useTodos()
+</script>
+
+
+
+
 <template>
   <div>
+    <pre>{{todos}}</pre>
+    <button @click="todos.chnageTaskName()">chnage</button>
+    
     <header class="bg-gray-500 py-5">
       <h1 class="ml-12 text-white text-3xl">Todoアプリ</h1>
     </header>
