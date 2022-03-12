@@ -42,5 +42,6 @@
       </div>
     </div>
     <Table />
+
   </div>
 </template>
