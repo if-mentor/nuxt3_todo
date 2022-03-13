@@ -59,7 +59,7 @@ Todo リストの作成を通じて、Nuxt.js(V3) の基礎、git,Github の使�
 2. `git pull origin main`を行なった後の作業
 
 remoteに変更があった場合は、`git pull origin main`のコマンドを実行し、remoteの変更を取り込む
-packageに更新がないか、確認するため、`yarn`コマンドを実行する
+packageに更新がないか、確認するため、`yarn` or `npm i` コマンドを実行する
 `success Already up-to-date.`と表示されればOK。
 
 ### 自主的な貢献を歓迎
