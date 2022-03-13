@@ -46,7 +46,8 @@ Todo リストの作成を通じて、Nuxt.js(V3) の基礎、git,Github の使�
    上記を実行し、`http://localhost:3000/`
    以下の画像の画面が表示できるか確認をお願いします。
 
-   ![image](https://user-images.githubusercontent.com/24813936/148723807-3b3e571b-6669-4d1c-a96f-d623f9650e09.png)
+![image](https://user-images.githubusercontent.com/65665381/158047936-6f2569f5-506f-41fb-b3fb-44f40c544f32.png)
+
 
 ## 開発Tips
 
