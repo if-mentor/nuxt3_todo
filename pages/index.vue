@@ -39,21 +39,32 @@
         </select>
       </div>
     </div>
-    <Table @edit-todo="catchItem" />
+    <Table @edit-todo="EditTodo" />
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
+import { useTodoStore } from "../store/index";
 export default {
   setup(){
     const router = useRouter();
-    const catchItem = (e) => {
+    //VueRouter設定
+    const store = useTodoStore();
+    //pinia設定
+    //storeToRefsでreactiveになる
+
+      const editTodoSet = (item) => {
+        store.setEditTodo(item)
+      }
+
+    const EditTodo = (todo) => {
       router.push({
-        path: `/edit/${e.id}`
+        path: `/edit/${todo.id}`,
       })
+      editTodoSet(todo)
     }
-    return { catchItem }
+    return { EditTodo }
   },
 }
 
