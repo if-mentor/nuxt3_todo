@@ -1,6 +1,4 @@
 
-
-  
 <template>
   <div>
     <header>
@@ -41,6 +39,22 @@
         </select>
       </div>
     </div>
-    <Table />
+    <Table @edit-todo="catchItem" />
   </div>
 </template>
+
+<script>
+import { useRouter } from 'vue-router'
+export default {
+  setup(){
+    const router = useRouter();
+    const catchItem = (e) => {
+      router.push({
+        path: `/edit/${e.id}`
+      })
+    }
+    return { catchItem }
+  },
+}
+
+</script>
