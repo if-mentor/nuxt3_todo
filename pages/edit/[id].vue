@@ -17,7 +17,7 @@
                 <label class="w-1">:</label>
                 <select class="w-20 ml-10" v-model="progress">
                     <option disabled>------</option>
-                    <option value="着手前">着手前</option>
+                    <option value="進行中">進行中</option>
                     <option value="着手">着手</option>
                     <option value="完了">完了</option>
                 </select>
@@ -36,7 +36,7 @@
 
         <div class="mt-20 flex justify-end">
             <button class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
-            <button class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2">戻る</button>
+            <button class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2" @click="goToHome">戻る</button>
             <button class="text-light-50 bg-sky-700 w-20 h-10 mx-4 rounded-md px-2" @click.prevent="saveData">保存</button>
         </div>
     </div>
@@ -54,27 +54,24 @@
 <script>
 import { useTodoStore } from "@/store/index";
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 export default {
     setup(){
     const router = useRouter();
+    const route = useRoute();
     const store = useTodoStore();
-    //storeToRefsでリアクティブデータになる
+    const id = route.params.id;
     const todos = computed(() => {
-        return store.todos
-    })
-    console.log(todos.value)
-    const {priority, status, taskName} = todos.value
-    console.log(priority)
-    console.log(status)
-    console.log(taskName)
-
-    const dominance = ref(priority)
+        return store.todos.find(todo => todo.id == id)
+    });
+    const { taskName, status, priority } = todos.value
+    const dominance = ref(priority);
     const progress = ref(status);
     const content = ref('');
     const title = ref(taskName);
 
-    const upDateItem = {
+    //更新する内容
+    const updateItem = {
         progress,
         dominance,
         content,
@@ -82,7 +79,11 @@ export default {
     }
 
     const saveData = () => {
-        store.upDateTodos(upDateItem)
+        store.updateTodos(updateItem)
+    }
+
+    const goToHome = () => {
+        router.push('/')
     }
 
     return {
@@ -92,6 +93,7 @@ export default {
         title,
         todos,
         saveData,
+        goToHome,
     }
 
     },
