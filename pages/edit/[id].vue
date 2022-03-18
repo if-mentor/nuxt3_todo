@@ -18,6 +18,7 @@
                 <select class="w-20 ml-10" v-model="progress">
                     <option disabled>------</option>
                     <option value="進行中">進行中</option>
+                    <option value="着手前">着手前</option>
                     <option value="着手">着手</option>
                     <option value="完了">完了</option>
                 </select>
@@ -34,11 +35,35 @@
             </div>
         </form>
 
+
+        <!-- モーダル -->
+        <label for="my-modal" class="btn modal-button">open modal</label>
+        <input type="checkbox" id="my-modal" class="modal-toggle">
+        <div class="modal">
+        <div class="modal-box z-2">
+            <h3 class="font-bold text-lg text-black">修正内容</h3>
+            <div class="py-4 text-black">
+                <p>タスク名: {{ title }}</p>
+                <p>内容: {{ content }}</p>
+                <p>ステータス: {{ progress }}</p>
+                <p>優先度: {{ dominance }}</p>
+            </div>
+            <div class="modal-action">
+            <label for="my-modal" class="btn btn-save" @click="saveData">この内容で保存する</label>
+            <label for="my-modal" class="btn btn-cancel">キャンセル</label>
+            </div>
+        </div>
+        </div>
+
         <div class="mt-20 flex justify-end">
             <button class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
             <button class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2" @click="goToHome">戻る</button>
-            <button class="text-light-50 bg-sky-700 w-20 h-10 mx-4 rounded-md px-2" @click.prevent="saveData">保存</button>
+            <button class="text-light-50 bg-sky-700 w-20 h-10 mx-4 rounded-md px-2" >保存</button>
         </div>
+            <div v-show="isPopUp" :class="{popMessage: isPopUp}">
+                <div class="close-container"><span class="close" @click="closePopUp">✖︎</span></div>
+                <p>保存されました</p>
+            </div>
     </div>
 </template>
 
@@ -49,54 +74,115 @@
     input,textarea,select {
         border: 1px solid #e7e7e7
     }
+    .popMessage {
+    width: 400px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: pink;
+    color: white;
+    position: fixed;
+    bottom: 30px;
+    right: 12px;
+
+    animation: pop 3s forwards;
+}
+
+.close-container {
+    background: #fff;
+    position: relative
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+
+
+@keyframes pop {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+        animation-timing-function: ease-out;
+    }
+    20%,80% {
+        transform: none;
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(20px);
+        opacity: 1;
+    }
+
+    }
+    .modal-box {
+        background: #fff;
+    }
+
+    .btn {
+        color: white;
+    }
+
+    .btn-save {
+        background-color: blue;
+    }
+
+    .btn-cancel {
+        background-color: red;
+    }
 </style>
 
 <script>
-import { useTodoStore } from "@/store/index";
-import { computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-export default {
-    setup(){
-    const router = useRouter();
-    const route = useRoute();
-    const store = useTodoStore();
-    const id = route.params.id;
-    const todos = computed(() => {
-        return store.todos.find(todo => todo.id == id)
-    });
-    const { taskName, status, priority } = todos.value
-    const dominance = ref(priority);
-    const progress = ref(status);
-    const content = ref('');
-    const title = ref(taskName);
+    import { useTodoStore } from "@/store/index";
+    import { computed } from 'vue'
+    import { useRouter, useRoute } from 'vue-router'
 
-    //更新する内容
-    const updateItem = {
-        progress,
-        dominance,
-        content,
-        title,
+    export default {
+        setup(){
+            const router = useRouter();
+            const route = useRoute();
+            const store = useTodoStore();
+            const id = route.params.id;
+            const todos = computed(() => {
+                return store.todos.find(todo => todo.id == id)
+            });
+            const { taskName, status, priority } = todos.value
+            const dominance = ref(priority);
+            const progress = ref(status);
+            const content = ref('');
+            const title = ref(taskName);
+            let isPopUp = ref(false)
+
+            //更新する内容
+            const updateItem = {
+                progress,
+                dominance,
+                content,
+                title,
+            };
+
+            const saveData = () => {
+                    store.updateTodos(updateItem)
+                    isPopUp.value = true
+                };
+            const goToHome = () => { router.push('/') }
+            const closePopUp = () => { isPopUp.value = false}
+
+            return {
+                progress,
+                dominance,
+                content,
+                title,
+                todos,
+                saveData,
+                goToHome,
+                isPopUp,
+                closePopUp
+            };
+
+        },
     }
-
-    const saveData = () => {
-        store.updateTodos(updateItem)
-    }
-
-    const goToHome = () => {
-        router.push('/')
-    }
-
-    return {
-        progress,
-        dominance,
-        content,
-        title,
-        todos,
-        saveData,
-        goToHome,
-    }
-
-    },
-}
 
 </script>
