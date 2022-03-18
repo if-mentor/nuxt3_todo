@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-gray-500 py-5"><h1 class="text-white text-2xl pl-4">TODOアプ</h1></header>
+    <header class="bg-gray-500 py-5"><h1 class="text-white text-2xl pl-4">TODOアプリ</h1></header>
     <div class="container mx-auto mt-20">
         <form>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
@@ -57,7 +57,7 @@
         <div class="mt-20 flex justify-end">
             <button class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
             <button class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2" @click="goToHome">戻る</button>
-            <label for="my-modal" class="btn text-light-50 bg-sky-700 w-20 h-10 mx-4 rounded-md px-2 modal-button">保存</label>
+            <label for="my-modal" class="btn text-light-50 bg-sky-700 w-20 h-8 mx-4 rounded-md px-2 modal-button">保存</label>
         </div>
 
             <!-- ポップアップ -->
@@ -65,7 +65,7 @@
                 <div class="close-container">
                     <span class="close" @click="closePopUp">✖︎</span>
                 </div>
-                <p>保存されました</p>
+                <p class="text-black">保存されました</p>
             </div>
 
     </div>
@@ -89,21 +89,8 @@
     .btn-cancel {
         background-color: red;
     }
-    .popMessage {
-        width: 400px;
-        padding: 8px 16px;
-        border-radius: 4px;
-        background-color: pink;
-        color: white;
-        position: fixed;
-        bottom: 30px;
-        right: 12px;
-
-        animation: pop 3s forwards;
-    }
 
     .close-container {
-        background: #fff;
         position: relative
     }
 
@@ -118,6 +105,17 @@
         background: #fff;
     }
 
+    .popMessage {
+        width: 400px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        background-color: pink;
+        position: fixed;
+        bottom: 30px;
+        right: 12px;
+
+        animation: pop 3s forwards;
+    }
 
     @keyframes pop {
         0% {
@@ -156,7 +154,7 @@
             const progress = ref(status);
             const content = ref('');
             const title = ref(taskName);
-            let isPopUp = ref(false)
+            const isPopUp = ref(false);
 
             //更新する内容
             const updateItem = {
@@ -168,10 +166,11 @@
 
             const saveData = () => {
                     store.updateTodos(updateItem)
-                    isPopUp.value = true
+                    isPopUp.value = true;
                 };
-            const goToHome = () => { router.push('/') }
-            const closePopUp = () => { isPopUp.value = false}
+            const goToHome = () => { router.push('/') };
+            const closePopUp = () => { isPopUp.value = false};
+
 
             return {
                 progress,

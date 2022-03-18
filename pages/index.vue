@@ -49,13 +49,7 @@ export default {
   setup(){
     const router = useRouter();
     //VueRouter設定
-    //pinia設定
-
-    const EditTodo = (todo) => {
-      router.push({
-        path: `/edit/${todo.id}`,
-      })
-    }
+    const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
     return { EditTodo }
   },
 }
