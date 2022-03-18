@@ -146,9 +146,7 @@
             const route = useRoute();
             const store = useTodoStore();
             const id = route.params.id;
-            const todos = computed(() => {
-                return store.todos.find(todo => todo.id == id)
-            });
+            const todos = computed(() => store.todos.find(todo => todo.id == id));
             const { taskName, status, priority } = todos.value
             const dominance = ref(priority);
             const progress = ref(status);

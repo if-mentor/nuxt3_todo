@@ -1,14 +1,9 @@
 <script setup>
-import { computed } from 'vue'
-import { useTodoStore } from "@/store/index";
-
-const store = useTodoStore()
-const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-
-const todos = computed(() => {
-  return store.todos
-})
-
+  import { computed } from 'vue'
+  import { useTodoStore } from "@/store/index";
+  const store = useTodoStore();
+  const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+  const todos = computed(() => store.todos )
   const emit = defineEmits(['edit-todo'])
   const editTodo = item => emit('edit-todo', item)
 </script>
