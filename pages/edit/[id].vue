@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-gray-500 py-5"><h1 class="text-white text-2xl pl-4">TODOアプリ{{ $route.params.id }}</h1></header>
+    <header class="bg-gray-500 py-5"><h1 class="text-white text-2xl pl-4">TODOアプ</h1></header>
     <div class="container mx-auto mt-20">
         <form>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
@@ -37,33 +37,37 @@
 
 
         <!-- モーダル -->
-        <label for="my-modal" class="btn modal-button">open modal</label>
         <input type="checkbox" id="my-modal" class="modal-toggle">
         <div class="modal">
-        <div class="modal-box z-2">
-            <h3 class="font-bold text-lg text-black">修正内容</h3>
-            <div class="py-4 text-black">
-                <p>タスク名: {{ title }}</p>
-                <p>内容: {{ content }}</p>
-                <p>ステータス: {{ progress }}</p>
-                <p>優先度: {{ dominance }}</p>
+            <div class="modal-box z-2">
+                <h3 class="font-bold text-lg text-black">修正内容</h3>
+                <div class="py-4 text-black">
+                    <p>タスク名: {{ title }}</p>
+                    <p>内容: {{ content }}</p>
+                    <p>ステータス: {{ progress }}</p>
+                    <p>優先度: {{ dominance }}</p>
+                </div>
+                <div class="modal-action">
+                    <label for="my-modal" class="btn btn-save" @click="saveData">この内容で保存する</label>
+                    <label for="my-modal" class="btn btn-cancel">キャンセル</label>
+                </div>
             </div>
-            <div class="modal-action">
-            <label for="my-modal" class="btn btn-save" @click="saveData">この内容で保存する</label>
-            <label for="my-modal" class="btn btn-cancel">キャンセル</label>
-            </div>
-        </div>
         </div>
 
         <div class="mt-20 flex justify-end">
             <button class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
             <button class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2" @click="goToHome">戻る</button>
-            <button class="text-light-50 bg-sky-700 w-20 h-10 mx-4 rounded-md px-2" >保存</button>
+            <label for="my-modal" class="btn text-light-50 bg-sky-700 w-20 h-10 mx-4 rounded-md px-2 modal-button">保存</label>
         </div>
+
+            <!-- ポップアップ -->
             <div v-show="isPopUp" :class="{popMessage: isPopUp}">
-                <div class="close-container"><span class="close" @click="closePopUp">✖︎</span></div>
+                <div class="close-container">
+                    <span class="close" @click="closePopUp">✖︎</span>
+                </div>
                 <p>保存されました</p>
             </div>
+
     </div>
 </template>
 
@@ -74,53 +78,6 @@
     input,textarea,select {
         border: 1px solid #e7e7e7
     }
-    .popMessage {
-    width: 400px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    background-color: pink;
-    color: white;
-    position: fixed;
-    bottom: 30px;
-    right: 12px;
-
-    animation: pop 3s forwards;
-}
-
-.close-container {
-    background: #fff;
-    position: relative
-}
-
-.close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-}
-
-
-
-@keyframes pop {
-    0% {
-        transform: translateY(20px);
-        opacity: 0;
-        animation-timing-function: ease-out;
-    }
-    20%,80% {
-        transform: none;
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(20px);
-        opacity: 1;
-    }
-
-    }
-    .modal-box {
-        background: #fff;
-    }
-
     .btn {
         color: white;
     }
@@ -131,6 +88,52 @@
 
     .btn-cancel {
         background-color: red;
+    }
+    .popMessage {
+        width: 400px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        background-color: pink;
+        color: white;
+        position: fixed;
+        bottom: 30px;
+        right: 12px;
+
+        animation: pop 3s forwards;
+    }
+
+    .close-container {
+        background: #fff;
+        position: relative
+    }
+
+    .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+    }
+
+    .modal-box {
+        background: #fff;
+    }
+
+
+    @keyframes pop {
+        0% {
+            transform: translateY(20px);
+            opacity: 0;
+            animation-timing-function: ease-out;
+        }
+        20%,80% {
+            transform: none;
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(20px);
+            opacity: 1;
+        }
+
     }
 </style>
 
