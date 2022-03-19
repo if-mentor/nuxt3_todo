@@ -1,6 +1,6 @@
 <script setup>
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-const todos = [
+const todos = reactive([
   {
     taskName: "Github上に静的サイトをホスティングする",
     status: "進行中",
@@ -21,8 +21,18 @@ const todos = [
     priority: "高",
     createDate: "2021-11-8 18:55:07",
     updateDate: "2021-11-8 18:55:07",
-  },
-];
+  }, 
+]);
+
+const deleteTodo = (index) => {
+  console.log(index)
+if(window.confirm('削除してよろしいでしょうか')){
+  todos.splice(index,1)
+}
+}
+
+
+
 </script>
 
 <template>
@@ -38,7 +48,7 @@ const todos = [
         </div>
       </div>
 
-      <div class="table-row-group" v-for="todo in todos" :key="todo.taskName">
+      <div class="table-row-group" v-for="(todo, index) in todos" :key="index">
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
             <input type="checkbox" class="mx-2" />
@@ -49,6 +59,12 @@ const todos = [
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
               <Icon name="Pencil" solid />
+            </button>
+            <button
+              class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
+              v-on:click="deleteTodo(index)"
+            >
+              <Icon name="Trash" solid />
             </button>
           </div>
           <div class="table-cell">
