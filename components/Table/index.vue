@@ -23,11 +23,17 @@ const todos = reactive([
     updateDate: "2021-11-8 18:55:07",
   }, 
 ]);
+let isToast = ref(false)
 
 const deleteTodo = (index) => {
+  console.log(isToast.value)
   console.log(index)
 if(window.confirm('削除してよろしいでしょうか')){
   todos.splice(index,1)
+  isToast.value = true
+  setTimeout(function() {
+        isToast.value = false
+    }, 3000);
 }
 }
 
@@ -103,6 +109,11 @@ if(window.confirm('削除してよろしいでしょうか')){
           </div>
         </div>
       </div>
+    </div>
+    <div v-show="isToast" class="card bg-success shadow-xl w-80">
+      <h class = "items-center text-center">
+        <h1 class="bg-success-content">削除しました</h1>
+        </h>
     </div>
   </div>
 </template>
