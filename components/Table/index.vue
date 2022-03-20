@@ -21,24 +21,21 @@ const todos = reactive([
     priority: "高",
     createDate: "2021-11-8 18:55:07",
     updateDate: "2021-11-8 18:55:07",
-  }, 
+  },
 ]);
-let isToast = ref(false)
+let isToast = ref(false);
 
 const deleteTodo = (index) => {
-  console.log(isToast.value)
-  console.log(index)
-if(window.confirm('削除してよろしいでしょうか')){
-  todos.splice(index,1)
-  isToast.value = true
-  setTimeout(function() {
-        isToast.value = false
+  console.log(isToast.value);
+  console.log(index);
+  if (window.confirm("削除してよろしいでしょうか")) {
+    todos.splice(index, 1);
+    isToast.value = true;
+    setTimeout(function () {
+      isToast.value = false;
     }, 3000);
-}
-}
-
-
-
+  }
+};
 </script>
 
 <template>
@@ -50,7 +47,9 @@ if(window.confirm('削除してよろしいでしょうか')){
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
             v-for="(item, index) in items"
             :key="index"
-          >{{ item }}</div>
+          >
+            {{ item }}
+          </div>
         </div>
       </div>
 
@@ -82,7 +81,9 @@ if(window.confirm('削除してよろしいでしょうか')){
                 todo.status === '着手前' ? 'bg-orange-100' : '',
                 todo.status === '着手前' ? 'text-orange-700' : '',
               ]"
-            >{{ todo.status }}</div>
+            >
+              {{ todo.status }}
+            </div>
           </div>
           <div class="table-cell">
             <div class="flex justify-center items-center">
@@ -99,21 +100,28 @@ if(window.confirm('削除してよろしいでしょうか')){
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
+              <p class="tracking-tighter text-sm text-center">
+                2021-11-8 18:55:07
+              </p>
             </div>
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
+              <p class="tracking-tighter text-sm text-center">
+                2021-11-8 18:55:07
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-show="isToast" class="card bg-success shadow-xl w-80">
-      <h class = "items-center text-center">
-        <h1 class="bg-success-content">削除しました</h1>
-        </h>
+    <div
+      v-show="isToast"
+      class="card w-96 bg-info shadow-xl fixed bottom-0 right-0 bg-info animate-bounce"
+    >
+      <div class="card-body text-center">
+        <p class="text-info-content">削除しました</p>
+      </div>
     </div>
   </div>
 </template>
