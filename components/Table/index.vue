@@ -1,41 +1,7 @@
 <script setup>
+import { useStoreTodos } from "/store/todos";
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-const todos = reactive([
-  {
-    taskName: "Github上に静的サイトをホスティングする",
-    status: "進行中",
-    priority: "低",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-  {
-    taskName: "ReactでTodoサイトを作成する",
-    status: "着手前",
-    priority: "中",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-  {
-    taskName: "Todoサイトで画面遷移できるようにする",
-    status: "着手前",
-    priority: "高",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-]);
-let isToast = ref(false);
-
-const deleteTodo = (index) => {
-  console.log(isToast.value);
-  console.log(index);
-  if (window.confirm("削除してよろしいでしょうか")) {
-    todos.splice(index, 1);
-    isToast.value = true;
-    setTimeout(function () {
-      isToast.value = false;
-    }, 3000);
-  }
-};
+const todos = useStoreTodos();
 </script>
 
 <template>
@@ -53,7 +19,11 @@ const deleteTodo = (index) => {
         </div>
       </div>
 
-      <div class="table-row-group" v-for="(todo, index) in todos" :key="index">
+      <div
+        class="table-row-group"
+        v-for="(todo, index) in todos.todos"
+        :key="index"
+      >
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
             <input type="checkbox" class="mx-2" />
@@ -67,7 +37,7 @@ const deleteTodo = (index) => {
             </button>
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
-              v-on:click="deleteTodo(index)"
+              v-on:click="todos.deleteTodo(index)"
             >
               <Icon name="Trash" solid />
             </button>
@@ -116,7 +86,7 @@ const deleteTodo = (index) => {
       </div>
     </div>
     <div
-      v-show="isToast"
+      v-show="todos.isToast"
       class="card w-96 bg-info shadow-xl fixed bottom-0 right-0 bg-info animate-bounce"
     >
       <div class="card-body text-center">
