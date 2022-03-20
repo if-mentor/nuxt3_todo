@@ -1,28 +1,11 @@
 <script setup>
-const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-const todos = [
-  {
-    taskName: "Github上に静的サイトをホスティングする",
-    status: "進行中",
-    priority: "低",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-  {
-    taskName: "ReactでTodoサイトを作成する",
-    status: "着手前",
-    priority: "中",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-  {
-    taskName: "Todoサイトで画面遷移できるようにする",
-    status: "着手前",
-    priority: "高",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-];
+  import { computed } from 'vue'
+  import { useTodoStore } from "@/store/index";
+  const store = useTodoStore();
+  const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+  const todos = computed(() => store.todos )
+  const emit = defineEmits(['edit-todo'])
+  const editTodo = item => emit('edit-todo', item)
 </script>
 
 <template>
@@ -42,13 +25,13 @@ const todos = [
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
             <input type="checkbox" class="mx-2" />
-            <span class="text-blue-500">{{ todo.taskName }}</span>
+              <span class="text-blue-500">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
-              <Icon name="Pencil" solid />
+              <Icon name="Pencil" @click="editTodo(todo)" solid />
             </button>
           </div>
           <div class="table-cell">

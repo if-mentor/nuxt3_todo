@@ -1,6 +1,4 @@
 
-
-  
 <template>
   <div>
     <header>
@@ -41,6 +39,19 @@
         </select>
       </div>
     </div>
-    <Table />
+    <Table @edit-todo="EditTodo" />
   </div>
 </template>
+
+<script>
+import { useRouter } from 'vue-router'
+export default {
+  setup(){
+    const router = useRouter();
+    //VueRouter設定
+    const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
+    return { EditTodo }
+  },
+}
+
+</script>
