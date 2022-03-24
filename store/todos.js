@@ -24,17 +24,11 @@ export const useStoreTodos = defineStore("todo", {
         updateDate: "2021-11-8 18:55:07",
       },
     ],
-    isToast: false,
   }),
   actions: {
   async deleteTodo(index) {
       console.log(index);
-      if (window.confirm("削除してよろしいでしょうか")) {
         this.todos.splice(index, 1);
-        this.isToast = true;
-        await new Promise(resolve => setTimeout(resolve, 3000))
-        this.isToast = false
-      }
     },
   },
 });

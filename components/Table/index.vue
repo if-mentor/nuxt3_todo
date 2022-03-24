@@ -2,6 +2,20 @@
 import { useStoreTodos } from "/store/todos";
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
 const todos = useStoreTodos();
+let isToast = ref(false)
+
+const deleteTodo = async(index) => {
+if (window.confirm("削除してよろしいでしょうか")) {
+ try{
+   await todos.deleteTodo(index)
+ }catch (error) {
+   console.error(error)
+ }  
+ isToast.value = true;
+ await new Promise(resolve => setTimeout(resolve, 3000));
+ isToast.value = false
+}
+}
 </script>
 
 <template>
@@ -37,7 +51,7 @@ const todos = useStoreTodos();
             </button>
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
-              v-on:click="todos.deleteTodo(index)"
+              @click="deleteTodo(index)"
             >
               <Icon name="Trash" solid />
             </button>
@@ -86,7 +100,7 @@ const todos = useStoreTodos();
       </div>
     </div>
     <div
-      v-show="todos.isToast"
+      v-show="isToast"
       class="card w-96 bg-info shadow-xl fixed bottom-0 right-0 bg-info animate-bounce"
     >
       <div class="card-body text-center">
