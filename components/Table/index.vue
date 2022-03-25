@@ -1,28 +1,26 @@
 <script setup>
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-const todos = [
-  {
-    taskName: "Github上に静的サイトをホスティングする",
-    status: "進行中",
-    priority: "低",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-  {
-    taskName: "ReactでTodoサイトを作成する",
-    status: "着手前",
-    priority: "中",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-  {
-    taskName: "Todoサイトで画面遷移できるようにする",
-    status: "着手前",
-    priority: "高",
-    createDate: "2021-11-8 18:55:07",
-    updateDate: "2021-11-8 18:55:07",
-  },
-];
+import { computed } from "vue";
+import { useTodoStore } from "@/store/index";
+const store = useTodoStore();
+const todos = computed(() => store.todos);
+const emit = defineEmits(["edit-todo"]);
+const editTodo = (item) => emit("edit-todo", item);
+let isToast = ref(false);
+
+const deleteTodo = async (index) => {
+  console.log(todos)
+  if (window.confirm("削除してよろしいでしょうか")) {
+    try {
+      await store.deleteTodo(index);
+    } catch (error) {
+      console.error(error);
+    }
+    isToast.value = true;
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    isToast.value = false;
+  }
+};
 </script>
 
 <template>
@@ -34,11 +32,17 @@ const todos = [
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
             v-for="(item, index) in items"
             :key="index"
-          >{{ item }}</div>
+          >
+            {{ item }}
+          </div>
         </div>
       </div>
 
-      <div class="table-row-group" v-for="todo in todos" :key="todo.taskName">
+      <div
+        class="table-row-group"
+        v-for="(todo, index) in todos"
+        :key="index"
+      >
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
             <input type="checkbox" class="mx-2" />
@@ -48,7 +52,13 @@ const todos = [
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
-              <Icon name="Pencil" solid />
+              <Icon name="Pencil" @click="editTodo(todo)" solid />
+            </button>
+            <button
+              class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
+              @click="deleteTodo(index)"
+            >
+              <Icon name="Trash" solid />
             </button>
           </div>
           <div class="table-cell">
@@ -60,7 +70,9 @@ const todos = [
                 todo.status === '着手前' ? 'bg-orange-100' : '',
                 todo.status === '着手前' ? 'text-orange-700' : '',
               ]"
-            >{{ todo.status }}</div>
+            >
+              {{ todo.status }}
+            </div>
           </div>
           <div class="table-cell">
             <div class="flex justify-center items-center">
@@ -77,15 +89,27 @@ const todos = [
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
+              <p class="tracking-tighter text-sm text-center">
+                2021-11-8 18:55:07
+              </p>
             </div>
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
+              <p class="tracking-tighter text-sm text-center">
+                2021-11-8 18:55:07
+              </p>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      v-show="isToast"
+      class="card w-96 bg-info shadow-xl fixed bottom-0 right-0 bg-info animate-bounce"
+    >
+      <div class="card-body text-center">
+        <p class="text-info-content">削除しました</p>
       </div>
     </div>
   </div>
