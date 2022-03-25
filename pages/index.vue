@@ -1,8 +1,9 @@
-
 <template>
   <div>
     <header>
-      <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">Todoアプリ</h1>
+      <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">
+        Todoアプリ
+      </h1>
     </header>
 
     <div class="flex mt-10 ml-5">
@@ -12,7 +13,9 @@
       </p>
       <button
         class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
-      >+ タスクを追加</button>
+      >
+        + タスクを追加
+      </button>
     </div>
 
     <div class="flex mt-10 ml-5">
@@ -44,14 +47,15 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 export default {
-  setup(){
+  setup() {
     const router = useRouter();
     //VueRouter設定
-    const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
-    return { EditTodo }
+    const EditTodo = (todo) => {
+      router.push(`/edit/${todo.id}`);
+    };
+    return { EditTodo };
   },
-}
-
+};
 </script>

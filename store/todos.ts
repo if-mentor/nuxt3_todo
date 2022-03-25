@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 
 interface TodoState {
-  taskName: String;
-  status: String;
-  priority: String;
+  taskName: string;
+  status: string;
+  priority: string;
 }
 
 export const useTodos = defineStore("todos", {

@@ -1,11 +1,26 @@
-<script setup>
-  import { computed } from 'vue'
-  import { useTodoStore } from "@/store/index";
-  const store = useTodoStore();
-  const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-  const todos = computed(() => store.todos )
-  const emit = defineEmits(['edit-todo'])
-  const editTodo = item => emit('edit-todo', item)
+<script setup lang="ts">
+import { computed } from "vue";
+import { useTodoStore } from "@/store/index";
+const store = useTodoStore();
+const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+const todos = computed(() => store.todos);
+
+//山ちゃんの書き方
+// const emit = defineEmits(['edit-todo'])
+// const editTodo = item => emit('edit-todo', item)
+
+//梁瀬の書き方
+interface TodoState {
+  id: number;
+  taskName: string;
+  status: string;
+  priority: string;
+  createDate: string;
+  updateDate: string;
+}
+const emit = defineEmits<{
+  (event: "edit-todo", item: TodoState);
+}>();
 </script>
 
 <template>
@@ -23,15 +38,17 @@
 
       <div class="table-row-group" v-for="(todo, index) in todos" :key="todo.taskName">
         <div class="table-row h-12">
-          <div class="table-cell pt-3 w-350px">
-            <input type="checkbox" class="mx-2" />
-              <span class="text-blue-500">{{ todo.taskName }}</span>
+          <div class="table-cell pt-3 w-350px flex">
+            <input type="checkbox" class="mx-2 inline-block" />
+            <span class="text-blue-500">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
-              <Icon name="Pencil" @click="editTodo(todo)" solid />
+              <!-- <Icon name="Pencil" @click="editTodo(todo)" solid /> -->
+
+              <Icon name="Pencil" @click="emit('edit-todo', todo)" solid />
             </button>
           </div>
           <div class="table-cell">
@@ -71,6 +88,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
