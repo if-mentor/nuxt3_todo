@@ -1,21 +1,26 @@
 <script setup>
-import { useStoreTodos } from "/store/todos";
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-const todos = useStoreTodos();
-let isToast = ref(false)
+import { computed } from "vue";
+import { useTodoStore } from "@/store/index";
+const store = useTodoStore();
+const todos = computed(() => store.todos);
+const emit = defineEmits(["edit-todo"]);
+const editTodo = (item) => emit("edit-todo", item);
+let isToast = ref(false);
 
-const deleteTodo = async(index) => {
-if (window.confirm("削除してよろしいでしょうか")) {
- try{
-   await todos.deleteTodo(index)
- }catch (error) {
-   console.error(error)
- }  
- isToast.value = true;
- await new Promise(resolve => setTimeout(resolve, 3000));
- isToast.value = false
-}
-}
+const deleteTodo = async (index) => {
+  console.log(todos)
+  if (window.confirm("削除してよろしいでしょうか")) {
+    try {
+      await store.deleteTodo(index);
+    } catch (error) {
+      console.error(error);
+    }
+    isToast.value = true;
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    isToast.value = false;
+  }
+};
 </script>
 
 <template>
@@ -35,7 +40,7 @@ if (window.confirm("削除してよろしいでしょうか")) {
 
       <div
         class="table-row-group"
-        v-for="(todo, index) in todos.todos"
+        v-for="(todo, index) in todos"
         :key="index"
       >
         <div class="table-row h-12">
@@ -47,7 +52,7 @@ if (window.confirm("削除してよろしいでしょうか")) {
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
-              <Icon name="Pencil" solid />
+              <Icon name="Pencil" @click="editTodo(todo)" solid />
             </button>
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
