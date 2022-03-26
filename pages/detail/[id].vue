@@ -69,7 +69,7 @@ const selectedTodo = computed(() => {
         >戻る</button>
         <button
           class="bg-gray-500 cursor-pointer p-2 mt-10 ml-5 text-white rounded-md"
-          @click="router.push('/edit')"
+          @click="router.push(`/edit/${selectedTodo.id}`)"
         >編集</button>
       </div>
     </div>
