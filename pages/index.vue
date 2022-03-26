@@ -11,6 +11,7 @@
         <span class="text-pink-500">3個</span>あります
       </p>
       <button
+        @click="moveCreatePage"
         class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
       >+ タスクを追加</button>
     </div>
@@ -46,11 +47,16 @@
 <script>
 import { useRouter } from 'vue-router'
 export default {
-  setup(){
+  setup() {
     const router = useRouter();
     //VueRouter設定
     const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
-    return { EditTodo }
+    const moveCreatePage = () => {
+      router.push('/create')
+    }
+
+
+    return { EditTodo ,moveCreatePage}
   },
 }
 
