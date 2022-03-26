@@ -20,7 +20,12 @@ interface TodoState {
 }
 const emit = defineEmits<{
   (event: "edit-todo", item: TodoState);
+  (event: "move-detailpage", item: TodoState);
+
 }>();
+
+
+
 </script>
 
 <template>
@@ -36,11 +41,11 @@ const emit = defineEmits<{
         </div>
       </div>
 
-      <div class="table-row-group" v-for="(todo, index) in todos" :key="todo.taskName">
+      <div class="table-row-group" v-for="(todo) in todos" :key="todo.taskName">
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px flex">
             <input type="checkbox" class="mx-2 inline-block" />
-            <span class="text-blue-500">{{ todo.taskName }}</span>
+            <span class="text-blue-500" @click="emit('move-detailpage', todo)">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button

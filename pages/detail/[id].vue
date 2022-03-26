@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useTodos } from '~~/store/todos';
+import { useTodoStore } from '~/store/index';
 
-const todos = useTodos()
+const todos = useTodoStore()
+const route = useRoute()
 const router = useRouter()
+const id = route.params.id
 
 
-const todo = computed(() => {
-  return todos.todoGetters
+const selectedTodo = computed(() => {
+  const todosGetters = todos.todosGetters
+  const selecedItemArray = todosGetters.filter(todo => todo.id === Number(id))
+  return selecedItemArray[0]
 })
-
 
 </script>
 
@@ -29,7 +32,7 @@ const todo = computed(() => {
               タスク名
               <span class="ml-15">:</span>
             </div>
-            <div class="table-cell pl-30 border-b-2">{{ todo.taskName }}</div>
+            <div class="table-cell pl-30 border-b-2">{{ selectedTodo.taskName }}</div>
           </div>
 
           <div class="table-row">
@@ -47,7 +50,7 @@ const todo = computed(() => {
               ステータス
               <span class="ml-13">:</span>
             </div>
-            <div class="table-cell border-b-2 pl-30">{{ todo.status }}</div>
+            <div class="table-cell border-b-2 pl-30">{{ selectedTodo.status }}</div>
           </div>
 
           <div class="table-row">
@@ -55,11 +58,11 @@ const todo = computed(() => {
               優先度
               <span class="ml-20">:</span>
             </div>
-            <div class="table-cell border-b-2 pl-30">{{ todo.priority }}</div>
+            <div class="table-cell border-b-2 pl-30">{{ selectedTodo.priority }}</div>
           </div>
         </div>
       </div>
-      <div class=" w-100% text-right">
+      <div class="w-100% text-right">
         <button
           class="bg-gray-500 cursor-pointer p-2 mt-10 text-white rounded-md"
           @click="router.push('/')"

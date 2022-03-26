@@ -1,9 +1,7 @@
 <template>
   <div>
     <header>
-      <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">
-        Todoアプリ
-      </h1>
+      <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">Todoアプリ</h1>
     </header>
 
     <div class="flex mt-10 ml-5">
@@ -13,9 +11,7 @@
       </p>
       <button
         class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
-      >
-        + タスクを追加
-      </button>
+      >+ タスクを追加</button>
     </div>
 
     <div class="flex mt-10 ml-5">
@@ -42,7 +38,7 @@
         </select>
       </div>
     </div>
-    <Table @edit-todo="EditTodo" />
+    <Table @edit-todo="EditTodo" @move-detailpage="MoveDetailPage" />
   </div>
 </template>
 
@@ -55,7 +51,12 @@ export default {
     const EditTodo = (todo) => {
       router.push(`/edit/${todo.id}`);
     };
-    return { EditTodo };
+
+    const MoveDetailPage = (todo) => {
+      router.push(`/detail/${todo.id}`)
+    }
+
+    return { EditTodo, MoveDetailPage };
   },
 };
 </script>
