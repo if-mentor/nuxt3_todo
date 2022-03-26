@@ -148,7 +148,7 @@
             const route = useRoute();
             const store = useTodoStore();
             const id = route.params.id;
-            const todos = computed(() => store.todos.find(todo => todo.id == id));
+            const todos = computed(() => store.filteredTodos.find(todo => todo.id == id));
             const { taskName, status, priority } = todos.value
             const dominance = ref(priority);
             const progress = ref(status);
@@ -158,10 +158,11 @@
 
             //更新する内容
             const updateItem = {
-                progress,
-                dominance,
-                content,
-                title,
+                id,
+                progress: progress.value,
+                dominance: dominance.value,
+                content: content.value,
+                title: title.value
             };
 
             const saveData = () => {

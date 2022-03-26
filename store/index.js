@@ -42,8 +42,18 @@ export const useTodoStore = defineStore('todos',{
     filteredTodos: state => state.todos
   },
   actions: {
-    updateTodos(state, payload) {
-      state.todos = payload
+    updateTodos({id, progress, title, dominance}) {
+      const updateTargetTodo = this.todos.filter(todo => todo.id == id);
+      const updateTodo = {
+        id: id,
+        taskName: title,
+        status: progress,
+        priority: dominance,
+        createDate: "2021-11-8 18:55:07",
+        updateDate: "2021-11-8 18:55:07",
+        isDeleted: false,
+      }
+      updateTargetTodo[0] = updateTodo
     },
     changeTodoState( id ){
       const filteredTodo = this.todos.find(todo => todo.id === id);
