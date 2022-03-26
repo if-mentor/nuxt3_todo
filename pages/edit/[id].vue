@@ -166,9 +166,6 @@
             });
 
             const saveData = () => {
-                    console.log(`template: ${todoObj.status}`)
-                    console.log(`template: ${todoObj.priority}`)
-                    console.log(`template: ${todoObj.taskName}`)
                     store.updateTodos(todoObj)
                     isPopUp.value = true;
                 };

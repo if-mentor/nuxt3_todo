@@ -44,10 +44,6 @@ export const useTodoStore = defineStore('todos',{
   actions: {
     updateTodos({id, status, taskName, priority}) {
       const updateIndex = this.todos.findIndex(todo => todo.id == id);
-      console.log(updateIndex)
-      console.log(status)
-      console.log(taskName)
-      console.log(priority)
       const updateTodo = {
         id: id,
         taskName: taskName,
@@ -58,7 +54,6 @@ export const useTodoStore = defineStore('todos',{
         isDeleted: false,
       }
       this.todos[updateIndex] = updateTodo;
-      console.log(this.todos[updateIndex])
 
     },
     changeTodoState( id ){
