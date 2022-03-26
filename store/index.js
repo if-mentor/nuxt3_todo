@@ -38,12 +38,14 @@ export const useTodoStore = defineStore('todos',{
       ],
     };
   },
-  getters: {},
+  getters: {
+    filteredTodos: state => state.todos
+  },
   actions: {
     updateTodos(state, payload) {
       state.todos = payload
     },
-    changeState( id ){
+    changeTodoState( id ){
       const filteredTodo = this.todos.find(todo => todo.id === id);
       filteredTodo.isDeleted = !this.todos[id -1].isDeleted
     },

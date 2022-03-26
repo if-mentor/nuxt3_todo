@@ -3,7 +3,7 @@
   import { useTodoStore } from "@/store/index";
   const store = useTodoStore();
   const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-  const todos = computed(() => store.todos )
+  const todos = computed(() => store.filteredTodos )
   const emit = defineEmits(['edit-todo', 'change-handler'])
   const editTodo = item => emit('edit-todo', item)
   const changeHandler = id => emit('change-handler', id)

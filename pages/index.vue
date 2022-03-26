@@ -55,7 +55,7 @@ export default {
     const router = useRouter();
     //VueRouter設定
     const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
-    const changeHandler = id => store.changeState(id);
+    const changeHandler = id => store.changeTodoState(id);
     const  allDelteTodo = () => {
       const message = "選択された項目を全て削除してもよろしいでしょうか?"
       const resutl = window.confirm(message)
