@@ -48,7 +48,7 @@
     </form>
 
     <div class="flex justify-end pt-24 pr-12">
-      <button class="text-light-50 bg-sky-300 w-16 h-10 mx-4 rounded-md">戻る</button>
+      <button class="text-light-50 bg-sky-300 w-16 h-10 mx-4 rounded-md" @click="returnToppage">戻る</button>
       <button class="text-light-50 bg-sky-800 w-16 h-10 rounded-md" @click="addTodo">保存</button>
       <!-- ボタンの色がwindiの標準色になかったため、近い色で代用 -->
     </div>
@@ -59,14 +59,18 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useTodoStore } from '~/store/index';
 
 const todosStore = useTodoStore()
+const router = useRouter()
 
 const ids = ref<number[]>([])
 for (let i = 0; i < 100; i++) {
   ids.value.push(i)
 }
+
+
 const taskName = ref<string>('')
 const contents = ref<string>('')
 const selectedPriority = ref<string>('')
@@ -80,7 +84,9 @@ const todosGetters = computed(() => {
 // const emit = defineEmits<{
 //   (evetn: 'add-todo', todo: any): void
 // }>()
-
+const returnToppage = () => {
+  router.push('/')
+}
 
 const addTodo = () => {
   const id = ids.value.splice(0, 1)
