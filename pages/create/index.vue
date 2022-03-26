@@ -32,10 +32,15 @@
 
           <div class="table-row">
             <div class="table-cell p-4 border-b">
-              <label>優先度:</label>
+              <label for="priority">優先度:</label>
             </div>
             <div class="table-cell p-4 border-b">
-              <select class="border w-16"></select>
+              <select class="border w-16" id="priority" v-model="selectedPriority">
+                <option value>---</option>
+                <option value="高">高</option>
+                <option value="中">中</option>
+                <option value="低">低</option>
+              </select>
             </div>
           </div>
         </div>
@@ -44,18 +49,56 @@
 
     <div class="flex justify-end pt-24 pr-12">
       <button class="text-light-50 bg-sky-300 w-16 h-10 mx-4 rounded-md">戻る</button>
-      <button class="text-light-50 bg-sky-800 w-16 h-10 rounded-md">保存</button>
+      <button class="text-light-50 bg-sky-800 w-16 h-10 rounded-md" @click="addTodo">保存</button>
       <!-- ボタンの色がwindiの標準色になかったため、近い色で代用 -->
     </div>
+
+    <h3>{{ todosGetters }}</h3>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useTodoStore } from '~/store/index';
 
+const todosStore = useTodoStore()
+
+const ids = ref<number[]>([])
+for (let i = 0; i < 100; i++) {
+  ids.value.push(i)
+}
 const taskName = ref<string>('')
 const contents = ref<string>('')
+const selectedPriority = ref<string>('')
+const createDate = "2021-11-8 18:55:07"
+const updateDate = "2021-11-8 18:55:07"
+
+const todosGetters = computed(() => {
+  return todosStore.todosGetters
+})
+
+// const emit = defineEmits<{
+//   (evetn: 'add-todo', todo: any): void
+// }>()
 
 
+const addTodo = () => {
+  const id = ids.value.splice(0, 1)
+
+  todosStore.addTodo({
+    id: id[0],
+    taskName: taskName.value,
+    status: '着手前',
+    priority: selectedPriority.value,
+    contents: contents.value,
+    createDate: createDate,
+    updateDate: updateDate
+  })
+
+  taskName.value = ''
+  contents.value = ''
+  selectedPriority.value = ''
+
+}
 
 </script>
