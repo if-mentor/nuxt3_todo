@@ -14,7 +14,7 @@
         class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
       >+ タスクを追加</button>
       <button
-        class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70" @click="allDelteTodo"
+        class="text-white bg-blue-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70" @click="allDelteTodo"
       >- 選択されたタスクを削除</button>
     </div>
 
@@ -55,13 +55,10 @@ export default {
     const router = useRouter();
     //VueRouter設定
     const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
-    const changeHandler = id => {
-      console.log(id)
-      store.changeState(id);
-    }
+    const changeHandler = id => store.changeState(id);
     const  allDelteTodo = () => {
       const message = "選択された項目を全て削除してもよろしいでしょうか?"
-      const resutl =  window.confirm(message)
+      const resutl = window.confirm(message)
       if(!resutl){ return }
       store.allDeleteTodo();
     }

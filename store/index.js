@@ -52,6 +52,7 @@ export const useTodoStore = defineStore('todos',{
         //todos配列からisDletedがtrueの要素を絞りこんでdoneTodoに格納
 
         doneTodo.forEach(doneitem =>{
+          //doneTodo一つずつの要素のidとtodosの配列のidが一致するものをtodos配列から削除
           this.todos.forEach((todo,index) => {
             if(todo.id === doneitem.id){
               this.todos.splice(index, 1)
