@@ -15,6 +15,7 @@ export const useTodoStore = defineStore('todos',{
             priority: "低",
             createDate: "2021-11-8 18:55:07",
             updateDate: "2021-11-8 18:55:07",
+            isDeleted: false,
           },
           {
             id:2,
@@ -23,6 +24,7 @@ export const useTodoStore = defineStore('todos',{
             priority: "中",
             createDate: "2021-11-8 18:55:07",
             updateDate: "2021-11-8 18:55:07",
+            isDeleted: false,
           },
           {
             id: 3,
@@ -31,9 +33,10 @@ export const useTodoStore = defineStore('todos',{
             priority: "高",
             createDate: "2021-11-8 18:55:07",
             updateDate: "2021-11-8 18:55:07",
+            isDeleted: false,
           },
       ],
-      editTodo: null
+      editTodo: []
     };
   },
   getters: {
