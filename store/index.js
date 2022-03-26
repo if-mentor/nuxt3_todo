@@ -49,6 +49,16 @@ export const useTodoStore = defineStore('todos',{
     changeStatus(payload) {
       console.log(payload)
       this.todos[payload.index].status = payload.todo.status
+    },
+    changePriority(payload) {
+      console.log(this.todos[payload].priority)
+      if(this.todos[payload].priority ==="低"){
+        this.todos[payload].priority ="中"
+      } else if(this.todos[payload].priority ==="中"){
+        this.todos[payload].priority = "高"
+      }else {
+        this.todos[payload].priority = "低"
+      }
     }
   },
 });

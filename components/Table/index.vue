@@ -23,6 +23,9 @@ const deleteTodo = async (index) => {
 const changeStatus = (index, todo) => {
   store.changeStatus({ index, todo });
 };
+const changePriority = (index) => {
+  store.changePriority(index);
+};
 </script>
 
 <template>
@@ -96,7 +99,7 @@ const changeStatus = (index, todo) => {
             </select>
           </div>
           <div class="table-cell">
-            <div class="flex justify-center items-center">
+            <!-- <div class="flex justify-center items-center">
               <div
                 :class="[
                   'text-center w-15px h-15px rounded-1/2 border-3 ',
@@ -106,7 +109,18 @@ const changeStatus = (index, todo) => {
                 ]"
               />
               <span class="ml-2">{{ todo.priority }}</span>
-            </div>
+            </div> -->
+            <button @click="changePriority(index)" class="flex justify-center items-center ml-6">
+              <div
+                :class="[
+                  'text-center w-15px h-15px rounded-1/2 border-3 ',
+                  todo.priority === '低' ? 'border-green-500' : '',
+                  todo.priority === '中' ? 'border-yellow-500' : '',
+                  todo.priority === '高' ? 'border-red-500' : '',
+                ]"
+              />
+              <span class="ml-2">{{ todo.priority }}</span>
+            </button>
           </div>
           <div class="table-cell">
             <div>
