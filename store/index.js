@@ -46,5 +46,9 @@ export const useTodoStore = defineStore('todos',{
       console.log(index);
         this.todos.splice(index, 1);
     },
+    changeStatus(payload) {
+      console.log(payload)
+      this.todos[payload.index].status = payload.todo.status
+    }
   },
 });

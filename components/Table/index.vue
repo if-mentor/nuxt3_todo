@@ -1,15 +1,14 @@
-<script setup>
-const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+<script setup lang="ts">
 import { computed } from "vue";
 import { useTodoStore } from "@/store/index";
 const store = useTodoStore();
+const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
 const todos = computed(() => store.todos);
 const emit = defineEmits(["edit-todo"]);
 const editTodo = (item) => emit("edit-todo", item);
 let isToast = ref(false);
-
 const deleteTodo = async (index) => {
-  console.log(todos)
+  console.log(index);
   if (window.confirm("削除してよろしいでしょうか")) {
     try {
       await store.deleteTodo(index);
@@ -20,6 +19,9 @@ const deleteTodo = async (index) => {
     await new Promise((resolve) => setTimeout(resolve, 3000));
     isToast.value = false;
   }
+};
+const changeStatus = (index, todo) => {
+  store.changeStatus({ index, todo });
 };
 </script>
 
@@ -38,22 +40,24 @@ const deleteTodo = async (index) => {
         </div>
       </div>
 
-      <div
-        class="table-row-group"
-        v-for="(todo, index) in todos"
-        :key="index"
-      >
+      <div class="table-row-group" v-for="(todo, index) in todos" :key="index">
         <div class="table-row h-12">
-          <div class="table-cell pt-3 w-350px">
-            <input type="checkbox" class="mx-2" />
-            <span class="text-blue-500">{{ todo.taskName }}</span>
+          <div class="table-cell pt-3 w-350px flex">
+            <input type="checkbox" class="mx-2 inline-block" />
+            <button
+              class="text-blue-500"
+              @click="emit('move-detailpage', todo)"
+            >
+              {{ todo.taskName }}
+            </button>
           </div>
           <div class="table-cell pt-3">
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
-              <Icon name="Pencil" @click="editTodo(todo)" solid />
+              <Icon name="Pencil" @click="emit('edit-todo', todo)" solid />
             </button>
+
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
               @click="deleteTodo(index)"
@@ -62,7 +66,7 @@ const deleteTodo = async (index) => {
             </button>
           </div>
           <div class="table-cell">
-            <div
+            <!-- <div
               :class="[
                 'text-center w-1/2 mx-auto rounded-4xl ',
                 todo.status === '進行中' ? 'bg-blue-100' : '',
@@ -72,7 +76,24 @@ const deleteTodo = async (index) => {
               ]"
             >
               {{ todo.status }}
-            </div>
+            </div> -->
+            <select
+              @change="changeStatus(index, todo)"
+              v-model="todo.status"
+              :class="[
+                'text-center  mx-auto rounded-4xl ',
+                todo.status === '進行中' ? 'bg-blue-100' : '',
+                todo.status === '進行中' ? 'text-blue-700' : '',
+                todo.status === '着手前' ? 'bg-orange-100' : '',
+                todo.status === '着手前' ? 'text-orange-700':'',
+                todo.status === '完了' ? 'bg-green-100' : '',
+                todo.status === '完了' ? 'text-green-700':'',
+              ]"
+            >
+              <option>着手前</option>
+              <option>進行中</option>
+              <option>完了</option>
+            </select>
           </div>
           <div class="table-cell">
             <div class="flex justify-center items-center">
