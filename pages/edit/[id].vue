@@ -6,7 +6,7 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">タスク名</label>
                 <label class="w-1">:</label>
-                <input type="text" required class="basis-auto ml-10 w-screen-sm" v-model="todoObj.title">
+                <input type="text" required class="basis-auto ml-10 w-screen-sm" v-model="todoObj.taskName">
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">内容</label>
@@ -16,7 +16,7 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">ステータス</label>
                 <label class="w-1">:</label>
-                <select class="w-20 ml-10" v-model="todoObj.progress">
+                <select class="w-20 ml-10" v-model="todoObj.status">
                     <option disabled>------</option>
                     <option value="進行中">進行中</option>
                     <option value="着手前">着手前</option>
@@ -27,7 +27,7 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">優先度</label>
                 <label class="w-1">:</label>
-                <select class="w-20 ml-10" v-model="todoObj.dominance">
+                <select class="w-20 ml-10" v-model="todoObj.priority">
                     <option disabled>------</option>
                     <option  value="高">高</option>
                     <option value="中">中</option>
@@ -43,10 +43,10 @@
             <div class="modal-box z-2">
                 <h3 class="font-bold text-lg text-black">修正内容</h3>
                 <div class="py-4 text-black">
-                    <p>タスク名: {{ todoObj.title }}</p>
+                    <p>タスク名: {{ todoObj.taskName }}</p>
                     <p>内容: {{ todoObj.content }}</p>
-                    <p>ステータス: {{ todoObj.progress }}</p>
-                    <p>優先度: {{ todoObj.dominance }}</p>
+                    <p>ステータス: {{ todoObj.status }}</p>
+                    <p>優先度: {{ todoObj.priority }}</p>
                 </div>
                 <div class="modal-action">
                     <label for="my-modal" class="btn btn-save" @click="saveData">この内容で保存する</label>
@@ -159,16 +159,16 @@
             //更新する内容
             const todoObj = reactive({
                 id,
-                progress: progress.value,
-                dominance: dominance.value,
+                status: progress.value,
+                priority: dominance.value,
                 content: content.value,
-                title: title.value
+                taskName: title.value
             });
 
             const saveData = () => {
-                    console.log(`template: ${todoObj.progress}`)
-                    console.log(`template: ${todoObj.dominance}`)
-                    console.log(`template: ${todoObj.title}`)
+                    console.log(`template: ${todoObj.status}`)
+                    console.log(`template: ${todoObj.priority}`)
+                    console.log(`template: ${todoObj.taskName}`)
                     store.updateTodos(todoObj)
                     isPopUp.value = true;
                 };

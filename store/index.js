@@ -42,17 +42,17 @@ export const useTodoStore = defineStore('todos',{
     filteredTodos: state => state.todos
   },
   actions: {
-    updateTodos({id, progress, title, dominance}) {
+    updateTodos({id, status, taskName, priority}) {
       const updateIndex = this.todos.findIndex(todo => todo.id == id);
       console.log(updateIndex)
-      console.log(progress)
-      console.log(title)
-      console.log(dominance)
+      console.log(status)
+      console.log(taskName)
+      console.log(priority)
       const updateTodo = {
         id: id,
-        taskName: title,
-        status: progress,
-        priority: dominance,
+        taskName: taskName,
+        status: status,
+        priority: priority,
         createDate: "2021-11-8 18:55:07",
         updateDate: "2021-11-8 18:55:07",
         isDeleted: false,
