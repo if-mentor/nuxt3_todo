@@ -36,14 +36,30 @@ export const useTodoStore = defineStore('todos',{
             isDeleted: false,
           },
       ],
-      editTodo: []
     };
   },
-  getters: {
-    },
+  getters: {},
   actions: {
-    updateTodos(payload) {
-      this.todos = payload
+    updateTodos(state, payload) {
+      state.todos = payload
     },
-  },
+    changeState( id ){
+      const filteredTodo = this.todos.find(todo => todo.id === id);
+      filteredTodo.isDeleted = !this.todos[id -1].isDeleted
+    },
+    allDeleteTodo(){
+        const doneTodo = this.todos.filter(todo => todo.isDeleted === true);
+        //todos配列からisDletedがtrueの要素を絞りこんでdoneTodoに格納
+
+        doneTodo.forEach(doneitem =>{
+          this.todos.forEach((todo,index) => {
+            if(todo.id === doneitem.id){
+              this.todos.splice(index, 1)
+            }
+          })
+        })
+
+    },
+
+  }
 });
