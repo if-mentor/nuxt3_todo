@@ -80,10 +80,5 @@ export const useTodoStore = defineStore('todos',{
         })
 
     },
-
-  async deleteTodo(index) {
-    console.log(index);
-      this.todos.splice(index, 1);
-  },
 },
 });
