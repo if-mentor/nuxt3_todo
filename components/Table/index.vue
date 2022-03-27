@@ -18,11 +18,17 @@
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
             v-for="(item, index) in items"
             :key="index"
-          >{{ item }}</div>
+          >
+            {{ item }}
+          </div>
         </div>
       </div>
 
-      <div class="table-row-group" v-for="todo in todos" :key="todo.taskName">
+      <div
+        class="table-row-group"
+        v-for="(todo, index) in todos"
+        :key="index"
+      >
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
             <input type="checkbox" @change="changeHandler(todo.id)" class="mx-2" />
@@ -34,6 +40,12 @@
             >
               <Icon name="Pencil" @click="editTodo(todo)" solid />
             </button>
+            <button
+              class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
+              @click="deleteTodo(index)"
+            >
+              <Icon name="Trash" solid />
+            </button>
           </div>
           <div class="table-cell">
             <div
@@ -44,7 +56,9 @@
                 todo.status === '着手前' ? 'bg-orange-100' : '',
                 todo.status === '着手前' ? 'text-orange-700' : '',
               ]"
-            >{{ todo.status }}</div>
+            >
+              {{ todo.status }}
+            </div>
           </div>
           <div class="table-cell">
             <div class="flex justify-center items-center">
@@ -61,15 +75,27 @@
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
+              <p class="tracking-tighter text-sm text-center">
+                2021-11-8 18:55:07
+              </p>
             </div>
           </div>
           <div class="table-cell">
             <div>
-              <p class="tracking-tighter text-sm text-center">2021-11-8 18:55:07</p>
+              <p class="tracking-tighter text-sm text-center">
+                2021-11-8 18:55:07
+              </p>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      v-show="isToast"
+      class="card w-96 bg-info shadow-xl fixed bottom-0 right-0 bg-info animate-bounce"
+    >
+      <div class="card-body text-center">
+        <p class="text-info-content">削除しました</p>
       </div>
     </div>
   </div>
