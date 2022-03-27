@@ -47,12 +47,12 @@ const changePriority = (index) => {
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px flex">
             <input type="checkbox" class="mx-2 inline-block" />
-            <button
+            <span
               class="text-blue-500"
               @click="emit('move-detailpage', todo)"
             >
               {{ todo.taskName }}
-            </button>
+            </span>
           </div>
           <div class="table-cell pt-3">
             <button
@@ -69,17 +69,6 @@ const changePriority = (index) => {
             </button>
           </div>
           <div class="table-cell">
-            <!-- <div
-              :class="[
-                'text-center w-1/2 mx-auto rounded-4xl ',
-                todo.status === '進行中' ? 'bg-blue-100' : '',
-                todo.status === '進行中' ? 'text-blue-700' : '',
-                todo.status === '着手前' ? 'bg-orange-100' : '',
-                todo.status === '着手前' ? 'text-orange-700' : '',
-              ]"
-            >
-              {{ todo.status }}
-            </div> -->
             <select
               @change="changeStatus(index, todo)"
               v-model="todo.status"
@@ -88,9 +77,9 @@ const changePriority = (index) => {
                 todo.status === '進行中' ? 'bg-blue-100' : '',
                 todo.status === '進行中' ? 'text-blue-700' : '',
                 todo.status === '着手前' ? 'bg-orange-100' : '',
-                todo.status === '着手前' ? 'text-orange-700':'',
+                todo.status === '着手前' ? 'text-orange-700' : '',
                 todo.status === '完了' ? 'bg-green-100' : '',
-                todo.status === '完了' ? 'text-green-700':'',
+                todo.status === '完了' ? 'text-green-700' : '',
               ]"
             >
               <option>着手前</option>
@@ -99,18 +88,10 @@ const changePriority = (index) => {
             </select>
           </div>
           <div class="table-cell">
-            <!-- <div class="flex justify-center items-center">
-              <div
-                :class="[
-                  'text-center w-15px h-15px rounded-1/2 border-3 ',
-                  todo.priority === '低' ? 'border-green-500' : '',
-                  todo.priority === '中' ? 'border-yellow-500' : '',
-                  todo.priority === '高' ? 'border-red-500' : '',
-                ]"
-              />
-              <span class="ml-2">{{ todo.priority }}</span>
-            </div> -->
-            <button @click="changePriority(index)" class="flex justify-center items-center ml-6">
+            <button
+              @click="changePriority(index)"
+              class="flex justify-center items-center ml-6"
+            >
               <div
                 :class="[
                   'text-center w-15px h-15px rounded-1/2 border-3 ',
