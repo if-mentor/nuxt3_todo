@@ -1,26 +1,12 @@
 <script setup>
-const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-import { computed } from "vue";
-import { useTodoStore } from "@/store/index";
-const store = useTodoStore();
-const todos = computed(() => store.todos);
-const emit = defineEmits(["edit-todo"]);
-const editTodo = (item) => emit("edit-todo", item);
-let isToast = ref(false);
-
-const deleteTodo = async (index) => {
-  console.log(todos)
-  if (window.confirm("削除してよろしいでしょうか")) {
-    try {
-      await store.deleteTodo(index);
-    } catch (error) {
-      console.error(error);
-    }
-    isToast.value = true;
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    isToast.value = false;
-  }
-};
+  import { computed } from 'vue'
+  import { useTodoStore } from "@/store/index";
+  const store = useTodoStore();
+  const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+  const todos = computed(() => store.filteredTodos )
+  const emit = defineEmits(['edit-todo', 'change-handler'])
+  const editTodo = item => emit('edit-todo', item)
+  const changeHandler = id => emit('change-handler', id)
 </script>
 
 <template>
@@ -30,8 +16,8 @@ const deleteTodo = async (index) => {
         <div class="table-row bg-gray-500/50 bg-opacity-10">
           <div
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
-            v-for="(item, index) in items"
-            :key="index"
+            v-for="item in items"
+            :key="item"
           >
             {{ item }}
           </div>
@@ -40,13 +26,13 @@ const deleteTodo = async (index) => {
 
       <div
         class="table-row-group"
-        v-for="(todo, index) in todos"
-        :key="index"
+        v-for="todo in todos"
+        :key="todo"
       >
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
-            <input type="checkbox" class="mx-2" />
-            <span class="text-blue-500">{{ todo.taskName }}</span>
+            <input type="checkbox" @change="changeHandler(todo.id)" class="mx-2" />
+              <span class="text-blue-500">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
