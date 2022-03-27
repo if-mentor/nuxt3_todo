@@ -62,8 +62,9 @@ export const useTodoStore = defineStore('todos',{
 
     },
     changeTodoState( id ){
-      const filteredTodo = this.todos.find(todo => todo.id === id);
-      filteredTodo.isDeleted = !this.todos[id -1].isDeleted
+      const changeStateIndex = this.todos.findIndex(todo => todo.id === id);
+      this.todos[changeStateIndex].isDeleted = !this.todos[changeStateIndex].isDeleted;
+      console.log(changeStateIndex)
     },
     allDeleteTodo(){
         const doneTodo = this.todos.filter(todo => todo.isDeleted === true);
