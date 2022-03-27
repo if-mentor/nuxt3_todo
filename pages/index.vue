@@ -58,8 +58,8 @@ export default {
     const changeHandler = id => store.changeTodoState(id);
     const  allDelteTodo = () => {
       const message = "選択された項目を全て削除してもよろしいでしょうか?"
-      const resutl = window.confirm(message)
-      if(!resutl){ return }
+      const result = window.confirm(message)
+      if(!result){ return }
       store.allDeleteTodo();
     }
     return { EditTodo, changeHandler, allDelteTodo }
