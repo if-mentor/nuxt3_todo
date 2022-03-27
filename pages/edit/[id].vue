@@ -11,7 +11,7 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">内容</label>
                 <label class="w-1">:</label>
-                <textarea required class="basis-auto h-120px ml-10 w-screen-sm" v-model="todoObj.content"></textarea>
+                <textarea required class="basis-auto h-120px ml-10 w-screen-sm" v-model="todoObj.memo"></textarea>
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">ステータス</label>
@@ -44,7 +44,7 @@
                 <h3 class="font-bold text-lg text-black">修正内容</h3>
                 <div class="py-4 text-black">
                     <p>タスク名: {{ todoObj.taskName }}</p>
-                    <p>内容: {{ todoObj.content }}</p>
+                    <p>内容: {{ todoObj.memo }}</p>
                     <p>ステータス: {{ todoObj.status }}</p>
                     <p>優先度: {{ todoObj.priority }}</p>
                 </div>
@@ -149,10 +149,10 @@
             const store = useTodoStore();
             const id = route.params.id;
             const todos = computed(() => store.filteredTodos.find(todo => todo.id == id));
-            const { taskName, status, priority } = todos.value
+            const { taskName, status, priority, memo } = todos.value
             const dominance = ref(priority);
             const progress = ref(status);
-            const content = ref('');
+            const content = ref(memo);
             const title = ref(taskName);
             const isPopUp = ref(false);
 
@@ -162,7 +162,8 @@
                 status: progress.value,
                 priority: dominance.value,
                 content: content.value,
-                taskName: title.value
+                taskName: title.value,
+                memo: content.value,
             });
 
             const saveData = () => {

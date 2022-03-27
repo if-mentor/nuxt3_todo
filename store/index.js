@@ -13,8 +13,10 @@ export const useTodoStore = defineStore('todos',{
             taskName: "Github上に静的サイトをホスティングする",
             status: "進行中",
             priority: "低",
+            memo: '',
             createDate: "2021-11-8 18:55:07",
             updateDate: "2021-11-8 18:55:07",
+            memo:'',
             isDeleted: false,
           },
           {
@@ -24,6 +26,7 @@ export const useTodoStore = defineStore('todos',{
             priority: "中",
             createDate: "2021-11-8 18:55:07",
             updateDate: "2021-11-8 18:55:07",
+            memo: '',
             isDeleted: false,
           },
           {
@@ -33,6 +36,7 @@ export const useTodoStore = defineStore('todos',{
             priority: "高",
             createDate: "2021-11-8 18:55:07",
             updateDate: "2021-11-8 18:55:07",
+            memo:'',
             isDeleted: false,
           },
       ],
@@ -42,12 +46,13 @@ export const useTodoStore = defineStore('todos',{
     filteredTodos: state => state.todos
   },
   actions: {
-    updateTodos({id, status, taskName, priority}) {
+    updateTodos({id, status, taskName, priority, memo}) {
       const updateIndex = this.todos.findIndex(todo => todo.id == id);
       const updateTodo = {
         id: id,
         taskName: taskName,
         status: status,
+        memo: memo,
         priority: priority,
         createDate: "2021-11-8 18:55:07",
         updateDate: "2021-11-8 18:55:07",
