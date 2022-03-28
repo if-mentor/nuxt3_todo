@@ -59,7 +59,7 @@ export default {
     const  allDelteTodo = () => {
       const message = "選択された項目を全て削除してもよろしいでしょうか?"
       const result = window.confirm(message)
-      if(!result){ return }
+      if(!result) return
       store.allDeleteTodo();
     }
     return { EditTodo, changeHandler, allDelteTodo }
