@@ -6,17 +6,17 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">タスク名</label>
                 <label class="w-1">:</label>
-                <input type="text" required class="basis-auto ml-10 w-screen-sm" v-model="todoObj.taskName">
+                <input type="text" required class="basis-auto ml-10 w-screen-sm input input-primary input-sm" v-model="todoObj.taskName">
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">内容</label>
                 <label class="w-1">:</label>
-                <textarea required class="basis-auto h-120px ml-10 w-screen-sm" v-model="todoObj.memo"></textarea>
+                <textarea required class="basis-auto h-120px ml-10 w-screen-sm textarea textarea-primary" v-model="todoObj.memo"></textarea>
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">ステータス</label>
                 <label class="w-1">:</label>
-                <select class="w-20 ml-10" v-model="todoObj.status">
+                <select class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs" v-model="todoObj.status">
                     <option disabled>------</option>
                     <option value="進行中">進行中</option>
                     <option value="着手前">着手前</option>
@@ -27,7 +27,7 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">優先度</label>
                 <label class="w-1">:</label>
-                <select class="w-20 ml-10" v-model="todoObj.priority">
+                <select class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs" v-model="todoObj.priority">
                     <option disabled>------</option>
                     <option  value="高">高</option>
                     <option value="中">中</option>
@@ -49,16 +49,16 @@
                     <p>優先度: {{ todoObj.priority }}</p>
                 </div>
                 <div class="modal-action">
-                    <label for="my-modal" class="btn btn-save" @click="saveData">この内容で保存する</label>
-                    <label for="my-modal" class="btn btn-cancel">キャンセル</label>
+                    <label for="my-modal" class="btn btn-primary" @click="saveData">この内容で保存する</label>
+                    <label for="my-modal" class="btn btn-secondary">キャンセル</label>
                 </div>
             </div>
         </div>
 
         <div class="mt-20 flex justify-end">
-            <button class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
-            <button class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2" @click="goToHome">戻る</button>
-            <label for="my-modal" class="btn text-light-50 bg-sky-700 w-20 h-8 mx-4 rounded-md px-2 modal-button">保存</label>
+            <button class="btn bg-blue-700 w-20 mx-4 px-2">リセット</button>
+            <button class="btn w-20 mx-4 px-2" @click="goToHome">戻る</button>
+            <label for="my-modal" class="btn btn-primary w-20 mx-4 px-2">保存</label>
         </div>
 
             <!-- ポップアップ -->
@@ -84,14 +84,6 @@
         color: white;
     }
 
-    .btn-save {
-        background-color: blue;
-    }
-
-    .btn-cancel {
-        background-color: red;
-    }
-
     .close-container {
         position: relative
     }
@@ -111,7 +103,7 @@
         width: 400px;
         padding: 8px 16px;
         border-radius: 4px;
-        background-color: pink;
+        background-color: #c3e6cb;
         position: fixed;
         bottom: 30px;
         right: 12px;
