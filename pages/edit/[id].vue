@@ -6,17 +6,17 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">タスク名</label>
                 <label class="w-1">:</label>
-                <input type="text" required class="basis-auto ml-10 w-screen-sm input input-primary input-sm" v-model="todoObj.taskName">
+                <input type="text" required class="basis-auto ml-10 w-screen-sm input input-primary input-sm focus:outline-none" v-model="todoObj.taskName">
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">内容</label>
                 <label class="w-1">:</label>
-                <textarea required class="basis-auto h-120px ml-10 w-screen-sm textarea textarea-primary" v-model="todoObj.memo"></textarea>
+                <textarea required class="basis-auto h-120px ml-10 w-screen-sm textarea textarea-primary focus:outline-none" v-model="todoObj.memo"></textarea>
             </div>
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">ステータス</label>
                 <label class="w-1">:</label>
-                <select class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs" v-model="todoObj.status">
+                <select class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs focus:outline-none" v-model="todoObj.status">
                     <option disabled>------</option>
                     <option value="進行中">進行中</option>
                     <option value="着手前">着手前</option>
@@ -27,7 +27,7 @@
             <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
                 <label class="basis-1/6">優先度</label>
                 <label class="w-1">:</label>
-                <select class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs" v-model="todoObj.priority">
+                <select class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs focus:outline-none" v-model="todoObj.priority">
                     <option disabled>------</option>
                     <option  value="高">高</option>
                     <option value="中">中</option>
