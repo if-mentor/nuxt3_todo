@@ -8,8 +8,14 @@
     <div class="flex mt-10 ml-5">
       <div class="text-xl">
         <div>
-          <p v-if="!todos.length" :class="{ allDone: !todos.length}">Nothing to do</p>
-          <p v-else>進行中のタスクは<span class="text-pink-500">{{ todos.length }}個あります</span></p>
+          <div>
+            <div v-if="display_flag === 'condition'">
+              <p>進行状況が{{ state }}のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個です</p>
+            </div>
+            <div v-if="display_flag === 'priority'">
+              <p>優先度が{{ priority }}のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個あります</p>
+            </div>
+          </div>
         </div>
       </div>
       <button
@@ -27,7 +33,7 @@
       </div>
       <div class="ml-5">
         <p>ステータス</p>
-        <select name="status" class="border w-177px" v-model="state" @change="chnageStatus">
+        <select name="status" class="border w-177px" v-model="state" @change="display_flag = 'condition'">
           <option value="すべて" selected>すべて</option>
           <option value="着手前">着手前</option>
           <option value="進行中">進行中</option>
@@ -36,7 +42,7 @@
       </div>
       <div class="ml-5">
         <p>優先度</p>
-        <select name="priority" class="border w-177px" v-model="priority" @change="chnagePriority">
+        <select name="priority" class="border w-177px" v-model="priority" @change="display_flag = 'priority'">
           <option selected>すべて</option>
           <option value="高">高</option>
           <option value="中">中</option>
@@ -69,13 +75,53 @@ export default {
       store.allDeleteTodo();
     }
 
+
     const state = ref('すべて');
     const priority = ref('すべて')
-    const progress = () => {
 
-    }
+    const display_flag = ref('condition')
 
-    return { EditTodo, changeHandler, allDelteTodo, todos, state, progress, priority }
+    const itemAmount = computed(() => {
+          if(display_flag.value === 'condition'){
+
+              const filterdStatus =todos.value.filter(todo => {
+                if(state.value === "すべて"){
+                  return todo
+                }else{
+                  return todo.status === state.value
+                }
+              })
+                console.log(filterdStatus)
+                return filterdStatus.length
+
+          }else if(display_flag.value === 'priority'){
+
+              const filteredPriority = todos.value.filter(todo => {
+                if(priority.value === 'すべて'){
+                  return todo
+                }else{
+                  return todo.priority === priority.value
+                }
+              })
+                console.log(filteredPriority)
+                return filteredPriority.length
+
+          }
+    })
+
+
+
+    return {
+      EditTodo,
+      changeHandler,
+      allDelteTodo,
+      todos,
+      state,
+      priority,
+      itemAmount,
+      display_flag
+      // isNoTask,
+      }
   },
 }
 
