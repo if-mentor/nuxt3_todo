@@ -82,31 +82,32 @@ export default {
     const display_flag = ref('condition')
 
     const itemAmount = computed(() => {
-          if(display_flag.value === 'condition'){
+        if(display_flag.value === 'condition'){
 
-              const filterdStatus =todos.value.filter(todo => {
-                if(state.value === "すべて"){
-                  return todo
-                }else{
-                  return todo.status === state.value
-                }
-              })
+            const filterdStatus =todos.value.filter(todo => {
+              if(state.value === "すべて"){
+                return todo
+              }else{
+                return todo.status === state.value
+              }
+            })
 
-                return filterdStatus.length
+          return filterdStatus.length
 
-          }else if(display_flag.value === 'priority'){
+        }else if(display_flag.value === 'priority'){
 
-              const filteredPriority = todos.value.filter(todo => {
-                if(priority.value === 'すべて'){
-                  return todo
-                }else{
-                  return todo.priority === priority.value
-                }
-              })
+            const filteredPriority = todos.value.filter(todo => {
+              if(priority.value === 'すべて'){
+                return todo
+              }else{
+                return todo.priority === priority.value
+              }
+            })
 
-                return filteredPriority.length
+          return filteredPriority.length
 
-          }
+        }
+
     })
 
 
@@ -120,7 +121,6 @@ export default {
       priority,
       itemAmount,
       display_flag
-      // isNoTask,
       }
   },
 }
