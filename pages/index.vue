@@ -91,7 +91,7 @@ export default {
                   return todo.status === state.value
                 }
               })
-                console.log(filterdStatus)
+
                 return filterdStatus.length
 
           }else if(display_flag.value === 'priority'){
@@ -103,7 +103,7 @@ export default {
                   return todo.priority === priority.value
                 }
               })
-                console.log(filteredPriority)
+
                 return filteredPriority.length
 
           }
