@@ -9,11 +9,25 @@
       <div class="text-xl">
         <div>
           <div>
-            <div v-if="display_flag === 'condition'">
-              <p>進行状況が{{ state }}のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個です</p>
+            <div v-show="display_flag === 'condition'">
+              <div v-if="itemAmount">
+                <p>ステータスが<span class="text-pink-500">{{ state }}</span>のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個あります</p>
+              </div>
+              <div v-else>ステータスが<span class="text-pink-500">{{ state }}</span>のタスクはありません</div>
             </div>
-            <div v-if="display_flag === 'priority'">
-              <p>優先度が{{ priority }}のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個あります</p>
+
+            <div v-show="display_flag === 'priority'">
+              <div v-if="itemAmount">
+                <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個あります</p>
+              </div>
+              <div v-else>
+                <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクはありません</p>
+              </div>
+
+              <div v-show="display_flag === 'noItem'">
+                <p>Conguratuations!! Nothing to do!!!</p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -57,7 +71,7 @@
 <script>
 import { useRouter } from 'vue-router'
 import { useTodoStore } from "@/store/index";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 export default {
   setup(){
     const store = useTodoStore();
@@ -78,6 +92,7 @@ export default {
 
     const state = ref('すべて');
     const priority = ref('すべて')
+    const noItemClass = ref(false)
 
     const display_flag = ref('condition')
 
@@ -110,6 +125,18 @@ export default {
 
     })
 
+    watch(todos, ()=> {
+      itemAmount.value
+      console.log(todos.value.length)
+      if(todos.value.length === 0){
+        display_flag.value = 'noItem'
+        console.log(display_flag.value)
+        noItemClass.value = true;
+        console.log(noItemClass.value)
+      }
+    }, {deep: true})
+
+
 
 
     return {
@@ -120,7 +147,8 @@ export default {
       state,
       priority,
       itemAmount,
-      display_flag
+      display_flag,
+      noItemClass,
       }
   },
 }
@@ -129,6 +157,6 @@ export default {
 
 <style>
 .allDone {
-  color: blue;
+  color: gold;
 }
 </style>
