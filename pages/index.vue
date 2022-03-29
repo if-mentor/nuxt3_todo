@@ -23,12 +23,13 @@
               <div v-else>
                 <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクはありません</p>
               </div>
-
-              <div v-show="display_flag === 'noItem'">
-                <p>Conguratuations!! Nothing to do!!!</p>
-              </div>
-
             </div>
+
+            <div v-show="display_flag === 'noItem'">
+              <p :class="{allDone: noItemClass}">Congratulations!! Nothing to do!!!</p>
+            </div>
+
+
           </div>
         </div>
       </div>
