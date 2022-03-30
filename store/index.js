@@ -2,62 +2,62 @@ import { defineStore } from "pinia";
 
 // defineStore 関数を用いてストアを作成する
 //第一引数はユニークキー
-export const useTodoStore = defineStore('todos',{
+export const useTodoStore = defineStore("todos", {
   state: () => {
     return {
       //配列でtodosを持つ
       //呼び出し時にIdが一致するものをとっていく
       todos: [
-          {
-            id: 1,
-            taskName: "Github上に静的サイトをホスティングする",
-            status: "進行中",
-            priority: "低",
-            createDate: "2021-11-8 18:55:07",
-            updateDate: "2021-11-8 18:55:07",
-          },
-          {
-            id:2,
-            taskName: "ReactでTodoサイトを作成する",
-            status: "着手前",
-            priority: "中",
-            createDate: "2021-11-8 18:55:07",
-            updateDate: "2021-11-8 18:55:07",
-          },
-          {
-            id: 3,
-            taskName: "Todoサイトで画面遷移できるようにする",
-            status: "着手前",
-            priority: "高",
-            createDate: "2021-11-8 18:55:07",
-            updateDate: "2021-11-8 18:55:07",
-          },
+        {
+          id: 1,
+          taskName: "Github上に静的サイトをホスティングする",
+          status: "進行中",
+          priority: "低",
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+        },
+        {
+          id: 2,
+          taskName: "ReactでTodoサイトを作成する",
+          status: "着手前",
+          priority: "中",
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+        },
+        {
+          id: 3,
+          taskName: "Todoサイトで画面遷移できるようにする",
+          status: "着手前",
+          priority: "高",
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+        },
       ],
-      editTodo: null
+      editTodo: null,
     };
   },
-  getters: {
-    },
+  getters: {},
   actions: {
     updateTodos(payload) {
-      this.todos = payload
+      this.todos = payload;
     },
-    async deleteTodo(index) {
+    deleteTodo(index) {
       console.log(index);
-        this.todos.splice(index, 1);
+      this.todos.splice(index, 1);
     },
-    changeStatus(payload) {
-      console.log(payload)
-      this.todos[payload.index].status = payload.todo.status
+    changeStatus({ id, status }) {
+      this.todos[id].status = status;
     },
-    changePriority(payload) {
-      if(this.todos[payload].priority ==="低"){
-        this.todos[payload].priority ="中"
-      } else if(this.todos[payload].priority ==="中"){
-        this.todos[payload].priority = "高"
-      }else {
-        this.todos[payload].priority = "低"
+
+    changePriority(id) {
+      console.log(id);
+      if (this.todos[id].priority === "低") {
+        this.todos[id].priority = "中";
+      } else if (this.todos[id].priority === "中") {
+        this.todos[id].priority = "高";
+      } else {
+        this.todos[id].priority = "低";
       }
-    }
+    },
   },
 });

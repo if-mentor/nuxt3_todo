@@ -7,24 +7,21 @@ const todos = computed(() => store.todos);
 const emit = defineEmits(["edit-todo"]);
 const editTodo = (item) => emit("edit-todo", item);
 let isToast = ref(false);
+
 const deleteTodo = async (index) => {
   console.log(index);
   if (window.confirm("削除してよろしいでしょうか")) {
-    try {
-      await store.deleteTodo(index);
-    } catch (error) {
-      console.error(error);
-    }
+    store.deleteTodo(index);
     isToast.value = true;
     await new Promise((resolve) => setTimeout(resolve, 3000));
     isToast.value = false;
   }
 };
-const changeStatus = (index, todo) => {
-  store.changeStatus({ index, todo });
+const changeStatus = (todo) => {
+  store.changeStatus(todo);
 };
-const changePriority = (index) => {
-  store.changePriority(index);
+const changePriority = (todo) => {
+  store.changePriority(todo);
 };
 </script>
 
@@ -43,14 +40,15 @@ const changePriority = (index) => {
         </div>
       </div>
 
-      <div class="table-row-group" v-for="(todo, index) in todos" :key="index">
+      <div
+        class="table-row-group"
+        v-for="(todo, index) in todos"
+        :key="todo.id"
+      >
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px flex">
             <input type="checkbox" class="mx-2 inline-block" />
-            <span
-              class="text-blue-500"
-              @click="emit('move-detailpage', todo)"
-            >
+            <span class="text-blue-500" @click="emit('move-detailpage', todo)">
               {{ todo.taskName }}
             </span>
           </div>
@@ -70,7 +68,7 @@ const changePriority = (index) => {
           </div>
           <div class="table-cell">
             <select
-              @change="changeStatus(index, todo)"
+              @change="changeStatus(todo)"
               v-model="todo.status"
               :class="[
                 'text-center  mx-auto rounded-4xl ',
@@ -89,7 +87,7 @@ const changePriority = (index) => {
           </div>
           <div class="table-cell">
             <button
-              @click="changePriority(index)"
+              @click="changePriority(todo)"
               class="flex justify-center items-center ml-6"
             >
               <div
@@ -128,5 +126,6 @@ const changePriority = (index) => {
         <p class="text-info-content">削除しました</p>
       </div>
     </div>
+    <div>{{ todos }}</div>
   </div>
 </template>
