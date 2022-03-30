@@ -128,16 +128,11 @@ export default {
 
     watch(todos, ()=> {
       itemAmount.value
-      console.log(todos.value.length)
       if(todos.value.length === 0){
         display_flag.value = 'noItem'
-        console.log(display_flag.value)
         noItemClass.value = true;
-        console.log(noItemClass.value)
       }
     }, {deep: true})
-
-
 
 
     return {
