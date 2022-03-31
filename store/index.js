@@ -46,17 +46,18 @@ export const useTodoStore = defineStore("todos", {
       this.todos.splice(index, 1);
     },
     changeStatus({ id, status }) {
-      this.todos[id].status = status;
+      const changeStatusTodo = this.todos.find(e=>e.id === id)
+      changeStatusTodo.status = status;
     },
 
-    changePriority(id) {
-      console.log(id);
-      if (this.todos[id].priority === "低") {
-        this.todos[id].priority = "中";
-      } else if (this.todos[id].priority === "中") {
-        this.todos[id].priority = "高";
+    changePriority({id}) {
+      const changePriorityTodo = this.todos.find(e=>e.id === id)
+      if (changePriorityTodo.priority === "低") {
+        changePriorityTodo.priority = "中";
+      } else if (changePriorityTodo.priority === "中") {
+        changePriorityTodo.priority = "高";
       } else {
-        this.todos[id].priority = "低";
+        changePriorityTodo.priority = "低";
       }
     },
   },
