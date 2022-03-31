@@ -8,14 +8,10 @@ const emit = defineEmits(["edit-todo"]);
 const editTodo = (item) => emit("edit-todo", item);
 let isToast = ref(false);
 
-const deleteTodo = async (index) => {
-  console.log(todos)
+const deleteTodo = async (todo) => {
   if (window.confirm("削除してよろしいでしょうか")) {
-    try {
-      await store.deleteTodo(index);
-    } catch (error) {
-      console.error(error);
-    }
+    store.deleteTodo(todo);
+    console.log(todo)
     isToast.value = true;
     await new Promise((resolve) => setTimeout(resolve, 3000));
     isToast.value = false;
@@ -56,7 +52,7 @@ const deleteTodo = async (index) => {
             </button>
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
-              @click="deleteTodo(index)"
+              @click="deleteTodo(todo)"
             >
               <Icon name="Trash" solid />
             </button>
