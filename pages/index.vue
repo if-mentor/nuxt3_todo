@@ -10,15 +10,15 @@
         <div>
           <div>
             <div v-show="display_flag === 'condition'">
-              <div v-if="itemAmount">
-                <p>ステータスが<span class="text-pink-500">{{ state }}</span>のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個あります</p>
+              <div v-if="remainingItemAmount">
+                <p>ステータスが<span class="text-pink-500">{{ state }}</span>のタスクは<span class="text-pink-500">{{ remainingItemAmount }}</span>個あります</p>
               </div>
               <div v-else>ステータスが<span class="text-pink-500">{{ state }}</span>のタスクはありません</div>
             </div>
 
             <div v-show="display_flag === 'priority'">
-              <div v-if="itemAmount">
-                <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクは<span class="text-pink-500">{{ itemAmount }}</span>個あります</p>
+              <div v-if="remainingItemAmount">
+                <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクは<span class="text-pink-500">{{ remainingItemAmount }}</span>個あります</p>
               </div>
               <div v-else>
                 <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクはありません</p>
@@ -58,7 +58,7 @@
       <div class="ml-5">
         <p>優先度</p>
         <select name="priority" class="border w-177px" v-model="priority" @change="display_flag = 'priority'">
-          <option selected>すべて</option>
+          <option value="すべて" selected>すべて</option>
           <option value="高">高</option>
           <option value="中">中</option>
           <option value="低">低</option>
@@ -78,9 +78,7 @@ export default {
     const store = useTodoStore();
     const router = useRouter();
     //VueRouter設定
-    const todos = computed(() => {
-      return store.filteredTodos
-    })
+    const todos = computed(() => store.filteredTodos)
     const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
     const changeHandler = id => store.changeTodoState(id);
     const  allDelteTodo = () => {
@@ -90,44 +88,28 @@ export default {
       store.allDeleteTodo();
     }
 
-
     const state = ref('すべて');
     const priority = ref('すべて')
     const noItemClass = ref(false)
-
     const display_flag = ref('condition')
 
-    const itemAmount = computed(() => {
-        if(display_flag.value === 'condition'){
-
-            const filterdStatus =todos.value.filter(todo => {
-              if(state.value === "すべて"){
-                return todo
-              }else{
-                return todo.status === state.value
-              }
-            })
-
-          return filterdStatus.length
-
-        }else if(display_flag.value === 'priority'){
-
-            const filteredPriority = todos.value.filter(todo => {
-              if(priority.value === 'すべて'){
-                return todo
-              }else{
-                return todo.priority === priority.value
-              }
-            })
-
-          return filteredPriority.length
-
-        }
-
+    const remainingItemAmount = computed(() => {
+      let computedItemLength = '';
+      switch(display_flag.value){
+        case 'condition':
+          const filteredStateItems = todos.value.filter(todo => state.value === "すべて" ? todo : todo.status === state.value)
+          computedItemLength = filteredStateItems.length
+          break;
+        case 'priority':
+          const filteredPriorityItems = todos.value.filter(todo => priority.value === 'すべて' ? todo : todo.priority === priority.value)
+          computedItemLength = filteredPriorityItems.length
+          break;
+      }
+      return computedItemLength
     })
 
     watch(todos, ()=> {
-      itemAmount.value
+      remainingItemAmount.value
       if(todos.value.length === 0){
         display_flag.value = 'noItem'
         noItemClass.value = true;
@@ -142,7 +124,7 @@ export default {
       todos,
       state,
       priority,
-      itemAmount,
+      remainingItemAmount,
       display_flag,
       noItemClass,
       }
