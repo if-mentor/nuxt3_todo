@@ -2,6 +2,8 @@
   import { computed } from 'vue'
   import { useTodoStore } from "@/store/index";
   const store = useTodoStore();
+  const statusTexts = store.statusText;
+  const priorityTexts = store.priorityText;
   const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
   const todos = computed(() => store.filteredTodos )
   const emit = defineEmits(['edit-todo', 'change-handler'])
@@ -51,13 +53,11 @@
             <div
               :class="[
                 'text-center w-1/2 mx-auto rounded-4xl ',
-                todo.status === '進行中' ? 'bg-blue-100' : '',
-                todo.status === '進行中' ? 'text-blue-700' : '',
-                todo.status === '着手前' ? 'bg-orange-100' : '',
-                todo.status === '着手前' ? 'text-orange-700' : '',
+                todo.status === 2 ? 'bg-blue-100 text-blue-700' : '',
+                todo.status === 1 ? 'bg-orange-100 text-orange-700' : '',
               ]"
             >
-              {{ todo.status }}
+              {{ statusTexts[todo.status] }}
             </div>
           </div>
           <div class="table-cell">
@@ -65,12 +65,12 @@
               <div
                 :class="[
                   'text-center w-15px h-15px rounded-1/2 border-3 ',
-                  todo.priority === '低' ? 'border-green-500' : '',
-                  todo.priority === '中' ? 'border-yellow-500' : '',
-                  todo.priority === '高' ? 'border-red-500' : '',
+                  todo.priority === 1 ? 'border-green-500' : '',
+                  todo.priority === 2 ? 'border-yellow-500' : '',
+                  todo.priority === 3 ? 'border-red-500' : '',
                 ]"
               />
-              <span class="ml-2">{{ todo.priority }}</span>
+              <span class="ml-2">{{ priorityTexts[todo.priority] }}</span>
             </div>
           </div>
           <div class="table-cell">
