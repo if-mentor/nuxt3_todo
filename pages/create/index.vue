@@ -52,8 +52,7 @@
       <button class="text-light-50 bg-sky-800 w-16 h-10 rounded-md" @click="addTodo">保存</button>
       <!-- ボタンの色がwindiの標準色になかったため、近い色で代用 -->
     </div>
-
-    <h3>{{ todosGetters }}</h3>
+    <h3>{{todosGetters}}</h3>
   </div>
 </template>
 
@@ -64,13 +63,6 @@ import { useTodoStore } from '~/store/index';
 
 const todosStore = useTodoStore()
 const router = useRouter()
-
-const ids = ref<number[]>([])
-for (let i = 0; i < 100; i++) {
-  ids.value.push(i)
-}
-
-
 const taskName = ref<string>('')
 const contents = ref<string>('')
 const selectedPriority = ref<string>('')
@@ -78,7 +70,7 @@ const createDate = "2021-11-8 18:55:07"
 const updateDate = "2021-11-8 18:55:07"
 
 const todosGetters = computed(() => {
-  return todosStore.todosGetters
+  return todosStore.filteredTodos
 })
 
 // const emit = defineEmits<{
@@ -88,11 +80,11 @@ const returnToppage = () => {
   router.push('/')
 }
 
-const addTodo = () => {
-  const id = ids.value.splice(0, 1)
 
+
+const addTodo = () => {
   todosStore.addTodo({
-    id: id[0],
+    id: todosGetters.value.length + 1,
     taskName: taskName.value,
     status: '着手前',
     priority: selectedPriority.value,
