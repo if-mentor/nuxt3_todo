@@ -11,8 +11,8 @@
           <input
             type="text"
             required
-            class="basis-auto ml-10 w-screen-sm"
-            v-model="title"
+            class="basis-auto ml-10 w-screen-sm input input-primary input-sm focus:outline-none"
+            v-model="todoObj.taskName"
           />
         </div>
         <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
@@ -20,14 +20,17 @@
           <label class="w-1">:</label>
           <textarea
             required
-            class="basis-auto h-120px ml-10 w-screen-sm"
-            v-model="content"
+            class="basis-auto h-120px ml-10 w-screen-sm textarea textarea-primary focus:outline-none"
+            v-model="todoObj.memo"
           ></textarea>
         </div>
         <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
           <label class="basis-1/6">ステータス</label>
           <label class="w-1">:</label>
-          <select class="w-20 ml-10" v-model="progress">
+          <select
+            class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs focus:outline-none"
+            v-model="todoObj.status"
+          >
             <option disabled>------</option>
             <option value="進行中">進行中</option>
             <option value="着手前">着手前</option>
@@ -38,7 +41,10 @@
         <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
           <label class="basis-1/6">優先度</label>
           <label class="w-1">:</label>
-          <select class="w-20 ml-10" v-model="dominance">
+          <select
+            class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs focus:outline-none"
+            v-model="todoObj.priority"
+          >
             <option disabled>------</option>
             <option value="高">高</option>
             <option value="中">中</option>
@@ -53,37 +59,73 @@
         <div class="modal-box z-2">
           <h3 class="font-bold text-lg text-black">修正内容</h3>
           <div class="py-4 text-black">
+            <p>タスク名: {{ todoObj.taskName }}</p>
+            <p>内容: {{ todoObj.memo }}</p>
+            <p>ステータス: {{ todoObj.status }}</p>
+            <p>優先度: {{ todoObj.priority }}</p>
+          </div>
+          <div class="modal-action">
+            <label for="my-modal" class="btn btn-primary" @click="saveData">この内容で保存する</label>
+            <label for="my-modal" class="btn btn-secondary">キャンセル</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-20 flex justify-end">
+        <button class="btn bg-blue-700 w-20 mx-4 px-2">リセット</button>
+        <button class="btn w-20 mx-4 px-2" @click="goToHome">戻る</button>
+        <label for="my-modal" class="btn btn-primary w-20 mx-4 px-2">保存</label>
+      </div>
+      <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
+        <label class="basis-1/6">ステータス</label>
+        <label class="w-1">:</label>
+        <select class="w-20 ml-10" v-model="progress">
+          <option disabled>------</option>
+          <option value="進行中">進行中</option>
+          <option value="着手前">着手前</option>
+          <option value="着手">着手</option>
+          <option value="完了">完了</option>
+        </select>
+      </div>
+      <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
+        <label class="basis-1/6">優先度</label>
+        <label class="w-1">:</label>
+        <select class="w-20 ml-10" v-model="dominance">
+          <option disabled>------</option>
+          <option value="高">高</option>
+          <option value="中">中</option>
+          <option value="低">低</option>
+        </select>
+      </div>
+
+      <!-- モーダル -->
+      <input type="checkbox" id="my-modal" class="modal-toggle" />
+      <div class="modal">
+        <div class="modal-box z-2">
+          <h3 class="font-bold text-lg text-black">修正内容</h3>
+          <div class="py-4 text-black">
             <p>タスク名: {{ title }}</p>
             <p>内容: {{ content }}</p>
             <p>ステータス: {{ progress }}</p>
             <p>優先度: {{ dominance }}</p>
           </div>
           <div class="modal-action">
-            <label for="my-modal" class="btn btn-save" @click="saveData"
-              >この内容で保存する</label
-            >
+            <label for="my-modal" class="btn btn-save" @click="saveData">この内容で保存する</label>
             <label for="my-modal" class="btn btn-cancel">キャンセル</label>
           </div>
         </div>
       </div>
 
       <div class="mt-20 flex justify-end">
-        <button
-          class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2"
-        >
-          リセット
-        </button>
+        <button class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
         <button
           class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2"
           @click="goToHome"
-        >
-          戻る
-        </button>
+        >戻る</button>
         <label
           for="my-modal"
           class="btn text-light-50 bg-sky-700 w-20 h-8 mx-4 rounded-md px-2 modal-button"
-          >保存</label
-        >
+        >保存</label>
       </div>
 
       <!-- ポップアップ -->
@@ -113,14 +155,6 @@ select {
   color: white;
 }
 
-.btn-save {
-  background-color: blue;
-}
-
-.btn-cancel {
-  background-color: red;
-}
-
 .close-container {
   position: relative;
 }
@@ -140,7 +174,7 @@ select {
   width: 400px;
   padding: 8px 16px;
   border-radius: 4px;
-  background-color: pink;
+  background-color: #c3e6cb;
   position: fixed;
   bottom: 30px;
   right: 12px;
@@ -168,8 +202,8 @@ select {
 
 <script>
 import { useTodoStore } from "@/store/index";
-import { computed } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
   setup() {
@@ -177,32 +211,31 @@ export default {
     const route = useRoute();
     const store = useTodoStore();
     const id = route.params.id;
-    const todos = computed(() => store.todos.find((todo) => todo.id == id));
-    const { taskName, status, priority } = todos.value;
+    const todos = computed(() => store.filteredTodos.find(todo => todo.id == id));
+    const { taskName, status, priority, memo } = todos.value
     const dominance = ref(priority);
     const progress = ref(status);
-    const content = ref("");
+    const content = ref(memo);
     const title = ref(taskName);
     const isPopUp = ref(false);
 
     //更新する内容
-    const updateItem = {
-      progress,
-      dominance,
-      content,
-      title,
-    };
+    const todoObj = reactive({
+      id,
+      status: progress.value,
+      priority: dominance.value,
+      content: content.value,
+      taskName: title.value,
+      memo: content.value,
+    });
 
     const saveData = () => {
-      store.updateTodos(updateItem);
+      store.updateTodos(todoObj)
       isPopUp.value = true;
     };
-    const goToHome = () => {
-      router.push("/");
-    };
-    const closePopUp = () => {
-      isPopUp.value = false;
-    };
+    const goToHome = () => { router.push('/') };
+    const closePopUp = () => { isPopUp.value = false };
+
 
     return {
       progress,
@@ -210,11 +243,14 @@ export default {
       content,
       title,
       todos,
+      todoObj,
       saveData,
       goToHome,
       isPopUp,
-      closePopUp,
+      closePopUp
     };
+
   },
-};
+}
+
 </script>

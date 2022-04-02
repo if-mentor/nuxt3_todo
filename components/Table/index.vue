@@ -1,31 +1,13 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 import { useTodoStore } from "@/store/index";
 const store = useTodoStore();
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-const todos = computed(() => store.todos);
-
-//山ちゃんの書き方
-// const emit = defineEmits(['edit-todo'])
-// const editTodo = item => emit('edit-todo', item)
-
-//梁瀬の書き方
-interface TodoState {
-  id: number;
-  taskName: string;
-  status: string;
-  priority: string;
-  createDate: string;
-  updateDate: string;
-}
-const emit = defineEmits<{
-  (event: "edit-todo", item: TodoState);
-  (event: "move-detailpage", item: TodoState);
-
-}>();
-
-
-
+const todos = computed(() => store.filteredTodos)
+const emit = defineEmits(['edit-todo', 'change-handler', 'move-detailPage'])
+const editTodo = item => emit('edit-todo', item)
+const changeHandler = id => emit('change-handler', id)
+const moveDetailPage = todo => emit('move-detailPage', todo)
 </script>
 
 <template>
@@ -35,25 +17,28 @@ const emit = defineEmits<{
         <div class="table-row bg-gray-500/50 bg-opacity-10">
           <div
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
-            v-for="(item, index) in items"
-            :key="index"
+            v-for="item in items"
+            :key="item"
           >{{ item }}</div>
         </div>
       </div>
 
-      <div class="table-row-group" v-for="(todo) in todos" :key="todo.taskName">
+      <div class="table-row-group" v-for="todo in todos" :key="todo.taskName">
         <div class="table-row h-12">
-          <div class="table-cell pt-3 w-350px flex">
-            <input type="checkbox" class="mx-2 inline-block" />
-            <span class="text-blue-500" @click="emit('move-detailpage', todo)">{{ todo.taskName }}</span>
+          <div class="table-cell pt-3 w-350px">
+            <input type="checkbox" @change="changeHandler(todo.id)" class="mx-2" />
+            <span class="text-blue-500" @click="moveDetailPage(todo)">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
-              <!-- <Icon name="Pencil" @click="editTodo(todo)" solid /> -->
-
-              <Icon name="Pencil" @click="emit('edit-todo', todo)" solid />
+              <Icon name="Pencil" @click="editTodo(todo)" solid />
+            </button>
+            <button
+              class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
+            >
+              <Icon name="Trash" solid />
             </button>
           </div>
           <div class="table-cell">
@@ -91,6 +76,11 @@ const emit = defineEmits<{
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="card w-96 bg-info shadow-xl fixed bottom-0 right-0 bg-info animate-bounce">
+      <div class="card-body text-center">
+        <p class="text-info-content">削除しました</p>
       </div>
     </div>
   </div>

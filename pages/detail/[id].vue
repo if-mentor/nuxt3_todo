@@ -9,7 +9,7 @@ const id = route.params.id
 
 
 const selectedTodo = computed(() => {
-  const todosGetters = todos.todosGetters
+  const todosGetters = todos.filteredTodos
   const selecedItemArray = todosGetters.filter(todo => todo.id === Number(id))
   return selecedItemArray[0]
 })

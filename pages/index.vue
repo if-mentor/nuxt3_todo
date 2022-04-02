@@ -12,6 +12,10 @@
       <button
         class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
       >+ タスクを追加</button>
+      <button
+        class="text-white bg-blue-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
+        @click="allDelteTodo"
+      >- 選択されたタスクを削除</button>
     </div>
 
     <div class="flex mt-10 ml-5">
@@ -38,25 +42,37 @@
         </select>
       </div>
     </div>
-    <Table @edit-todo="EditTodo" @move-detailpage="MoveDetailPage" />
+    <Table
+      @edit-todo="EditTodo"
+      @change-handler="changeHandler"
+      @move-detail-page="moveDetailPage"
+    />
   </div>
 </template>
 
 <script>
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router'
+import { useTodoStore } from "@/store/index";
 export default {
   setup() {
+    const store = useTodoStore();
     const router = useRouter();
     //VueRouter設定
-    const EditTodo = (todo) => {
-      router.push(`/edit/${todo.id}`);
-    };
-
-    const MoveDetailPage = (todo) => {
-      router.push(`/detail/${todo.id}`)
+    const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
+    const changeHandler = id => store.changeTodoState(id);
+    const allDelteTodo = () => {
+      const message = "選択された項目を全て削除してもよろしいでしょうか?"
+      const result = window.confirm(message)
+      if (!result) { return }
+      store.allDeleteTodo();
     }
 
-    return { EditTodo, MoveDetailPage };
+    const moveDetailPage = todo => router.push(`/detail/${todo.id}`)
+
+    return { EditTodo, changeHandler, allDelteTodo, moveDetailPage }
   },
-};
+}
+
+
+
 </script>
