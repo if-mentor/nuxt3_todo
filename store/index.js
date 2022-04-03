@@ -48,9 +48,19 @@ export const useTodoStore = defineStore("todos", {
     filteredTodos: (state) => state.todos,
   },
   actions: {
-    deleteTodo(index) {
-      console.log(index);
-      this.todos.splice(index, 1);
+    updateTodos({ id, status, taskName, priority, memo }) {
+      const updateIndex = this.todos.findIndex((todo) => todo.id == id);
+      const updateTodo = {
+        id: id,
+        taskName: taskName,
+        status: status,
+        memo: memo,
+        priority: priority,
+        createDate: "2021-11-8 18:55:07",
+        updateDate: "2021-11-8 18:55:07",
+        isDeleted: false,
+      };
+      this.todos[updateIndex] = updateTodo;
     },
     changeStatus({ id, status }) {
       const changeStatusTodo = this.todos.find((e) => e.id === id);
@@ -67,30 +77,19 @@ export const useTodoStore = defineStore("todos", {
         changePriorityTodo.priority = "低";
       }
     },
-    updateTodos({ id, status, taskName, priority, memo }) {
-      const updateIndex = this.todos.findIndex((todo) => todo.id == id);
-      const updateTodo = {
-        id: id,
-        taskName: taskName,
-        status: status,
-        memo: memo,
-        priority: priority,
-        createDate: "2021-11-8 18:55:07",
-        updateDate: "2021-11-8 18:55:07",
-        isDeleted: false,
-      };
-      this.todos[updateIndex] = updateTodo;
-    },
     changeTodoState(id) {
       const changeStateIndex = this.todos.findIndex((todo) => todo.id === id);
       this.todos[changeStateIndex].isDeleted = !this.todos[changeStateIndex]
         .isDeleted;
       console.log(changeStateIndex);
     },
+    deleteTodo({ id }) {
+      const deleteIndex = this.todos.findIndex((e) => e.id === id);
+      this.todos.splice(deleteIndex, 1);
+    },
     allDeleteTodo() {
       const doneTodo = this.todos.filter((todo) => todo.isDeleted === true);
       //todos配列からisDletedがtrueの要素を絞りこんでdoneTodoに格納
-
       doneTodo.forEach((doneitem) => {
         //doneTodo一つずつの要素のidとtodosの配列のidが一致するものをtodos配列から削除
         this.todos.forEach((todo, index) => {

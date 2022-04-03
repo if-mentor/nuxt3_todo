@@ -6,13 +6,11 @@ const items = ["タスク名", "", "ステータス", "優先度", "作成日時
 const todos = computed(() => store.filteredTodos);
 const emit = defineEmits(["edit-todo", "change-handler"]);
 const editTodo = (item) => emit("edit-todo", item);
-const changeHandler = (id) => emit("change-handler", id);
-let isToast = ref(false);
 
-const deleteTodo = async (index) => {
-  console.log(index);
+let isToast = ref(false);
+const deleteTodo = async (todo) => {
   if (window.confirm("削除してよろしいでしょうか")) {
-    store.deleteTodo(index);
+    store.deleteTodo(todo);
     isToast.value = true;
     await new Promise((resolve) => setTimeout(resolve, 3000));
     isToast.value = false;
@@ -24,6 +22,7 @@ const changeStatus = (todo) => {
 const changePriority = (todo) => {
   store.changePriority(todo);
 };
+const changeHandler = (id) => emit("change-handler", id);
 </script>
 
 <template>
@@ -60,7 +59,7 @@ const changePriority = (todo) => {
 
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
-              @click="deleteTodo(index)"
+              @click="deleteTodo(todo)"
             >
               <Icon name="Trash" solid />
             </button>
