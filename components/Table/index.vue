@@ -1,11 +1,12 @@
-<script setup lang="ts">
+<script setup>
 import { computed } from "vue";
 import { useTodoStore } from "@/store/index";
 const store = useTodoStore();
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
-const todos = computed(() => store.todos);
-const emit = defineEmits(["edit-todo"]);
+const todos = computed(() => store.filteredTodos);
+const emit = defineEmits(["edit-todo", "change-handler"]);
 const editTodo = (item) => emit("edit-todo", item);
+const changeHandler = (id) => emit("change-handler", id);
 let isToast = ref(false);
 
 const deleteTodo = async (index) => {
@@ -32,25 +33,23 @@ const changePriority = (todo) => {
         <div class="table-row bg-gray-500/50 bg-opacity-10">
           <div
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
-            v-for="(item, index) in items"
-            :key="index"
+            v-for="item in items"
+            :key="item"
           >
             {{ item }}
           </div>
         </div>
       </div>
 
-      <div
-        class="table-row-group"
-        v-for="(todo, index) in todos"
-        :key="todo.id"
-      >
+      <div class="table-row-group" v-for="todo in todos" :key="todo">
         <div class="table-row h-12">
-          <div class="table-cell pt-3 w-350px flex">
-            <input type="checkbox" class="mx-2 inline-block" />
-            <span class="text-blue-500" @click="emit('move-detailpage', todo)">
-              {{ todo.taskName }}
-            </span>
+          <div class="table-cell pt-3 w-350px">
+            <input
+              type="checkbox"
+              @change="changeHandler(todo.id)"
+              class="mx-2"
+            />
+            <span class="text-blue-500">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
@@ -126,6 +125,5 @@ const changePriority = (todo) => {
         <p class="text-info-content">削除しました</p>
       </div>
     </div>
-    <div>{{ todos }}</div>
   </div>
 </template>
