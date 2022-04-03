@@ -1,22 +1,28 @@
 <script setup>
-const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
 import { computed } from "vue";
 import { useTodoStore } from "@/store/index";
 const store = useTodoStore();
-const todos = computed(() => store.todos);
-const emit = defineEmits(["edit-todo"]);
+const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+const todos = computed(() => store.filteredTodos);
+const emit = defineEmits(["edit-todo", "change-handler"]);
 const editTodo = (item) => emit("edit-todo", item);
-let isToast = ref(false);
 
+let isToast = ref(false);
 const deleteTodo = async (todo) => {
   if (window.confirm("削除してよろしいでしょうか")) {
     store.deleteTodo(todo);
-    console.log(todo)
     isToast.value = true;
     await new Promise((resolve) => setTimeout(resolve, 3000));
     isToast.value = false;
   }
 };
+const changeStatus = (todo) => {
+  store.changeStatus(todo);
+};
+const changePriority = (todo) => {
+  store.changePriority(todo);
+};
+const changeHandler = (id) => emit("change-handler", id);
 </script>
 
 <template>
@@ -26,30 +32,31 @@ const deleteTodo = async (todo) => {
         <div class="table-row bg-gray-500/50 bg-opacity-10">
           <div
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
-            v-for="(item, index) in items"
-            :key="index"
+            v-for="item in items"
+            :key="item"
           >
             {{ item }}
           </div>
         </div>
       </div>
 
-      <div
-        class="table-row-group"
-        v-for="(todo, index) in todos"
-        :key="index"
-      >
+      <div class="table-row-group" v-for="todo in todos" :key="todo">
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
-            <input type="checkbox" class="mx-2" />
+            <input
+              type="checkbox"
+              @change="changeHandler(todo.id)"
+              class="mx-2"
+            />
             <span class="text-blue-500">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
             >
-              <Icon name="Pencil" @click="editTodo(todo)" solid />
+              <Icon name="Pencil" @click="emit('edit-todo', todo)" solid />
             </button>
+
             <button
               class="w-25px h-25px ml-3 border-2 font-medium text-sm text-gray-500 rounded hover:bg-gray-200 shadow-2xl"
               @click="deleteTodo(todo)"
@@ -58,20 +65,29 @@ const deleteTodo = async (todo) => {
             </button>
           </div>
           <div class="table-cell">
-            <div
+            <select
+              @change="changeStatus(todo)"
+              v-model="todo.status"
               :class="[
-                'text-center w-1/2 mx-auto rounded-4xl ',
+                'text-center  mx-auto rounded-4xl ',
                 todo.status === '進行中' ? 'bg-blue-100' : '',
                 todo.status === '進行中' ? 'text-blue-700' : '',
                 todo.status === '着手前' ? 'bg-orange-100' : '',
                 todo.status === '着手前' ? 'text-orange-700' : '',
+                todo.status === '完了' ? 'bg-green-100' : '',
+                todo.status === '完了' ? 'text-green-700' : '',
               ]"
             >
-              {{ todo.status }}
-            </div>
+              <option>着手前</option>
+              <option>進行中</option>
+              <option>完了</option>
+            </select>
           </div>
           <div class="table-cell">
-            <div class="flex justify-center items-center">
+            <button
+              @click="changePriority(todo)"
+              class="flex justify-center items-center ml-6"
+            >
               <div
                 :class="[
                   'text-center w-15px h-15px rounded-1/2 border-3 ',
@@ -81,7 +97,7 @@ const deleteTodo = async (todo) => {
                 ]"
               />
               <span class="ml-2">{{ todo.priority }}</span>
-            </div>
+            </button>
           </div>
           <div class="table-cell">
             <div>
