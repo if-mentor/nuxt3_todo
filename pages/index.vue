@@ -5,28 +5,34 @@ import { computed, watch } from "vue";
 const store = useTodoStore();
 const router = useRouter();
 //VueRouter設定
+
+// 絞り込み後のタスク
 const todos = computed(() => {
   return store.filteredTodos;
+});
+// 絞り込み後のタスク数
+const countItem = computed(() => {
+  return todos.value.length;
+});
+// 全体タスク数
+const countAllItem = computed(() => {
+  return store.todos.length;
 });
 const EditTodo = (todo) => {
   router.push(`/edit/${todo.id}`);
 };
+// タスクのステータスオブジェクト
 const statusTexts = store.statusText;
+// タスクの優先度オブジェクト
 const priorityTexts = store.priorityText;
+// フィルターの内容
 const filterQuery = {
   keywords: '',
   status: 0,
   priority: 0,
 };
-const countItem = computed(() => {
-  return todos.value.length;
-});
-const countAllItem = computed(() => {
-  return store.todos.length;
-});
 
-const comment = ref('')
-
+// 絞り込みを行った際の処理
 const changeFilterQuery = (changeFilterItem) => {
   store.changeFilterQuery(filterQuery);
 };
