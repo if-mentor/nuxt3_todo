@@ -7,12 +7,48 @@ export const useTodoStore = defineStore("todos", {
     return {
       //配列でtodosを持つ
       //呼び出し時にIdが一致するものをとっていく
+      statusText: [
+        {
+          value: 0,
+          text: 'すべて',
+        },
+        {
+          value: 1,
+          text: '着手前',
+        },
+        {
+          value: 2,
+          text: '進行中',
+        },
+        {
+          value: 3,
+          text: '完了',
+        },
+      ],
+      priorityText: [
+        {
+          value: 0,
+          text: 'すべて',
+        },
+        {
+          value: 1,
+          text: '高',
+        },
+        {
+          value: 2,
+          text: '中',
+        },
+        {
+          value: 3,
+          text: '低',
+        },
+      ],
       todos: [
         {
           id: 1,
           taskName: "Github上に静的サイトをホスティングする",
-          status: "進行中",
-          priority: "低",
+          status: 2,
+          priority: 3,
           memo: "",
           createDate: "2021-11-8 18:55:07",
           updateDate: "2021-11-8 18:55:07",
@@ -22,8 +58,8 @@ export const useTodoStore = defineStore("todos", {
         {
           id: 2,
           taskName: "ReactでTodoサイトを作成する",
-          status: "着手前",
-          priority: "中",
+          status: 1,
+          priority: 2,
           createDate: "2021-11-8 18:55:07",
           updateDate: "2021-11-8 18:55:07",
           memo: "",
@@ -32,8 +68,8 @@ export const useTodoStore = defineStore("todos", {
         {
           id: 3,
           taskName: "Todoサイトで画面遷移できるようにする",
-          status: "着手前",
-          priority: "高",
+          status: 1,
+          priority: 1,
           createDate: "2021-11-8 18:55:07",
           updateDate: "2021-11-8 18:55:07",
           memo: "",
@@ -41,13 +77,38 @@ export const useTodoStore = defineStore("todos", {
         },
       ],
       editTodo: null,
+      filterQuery: {
+        keywords: '',
+        status: 0,
+        priority: 0,
+      },
     };
   },
 
   getters: {
-    filteredTodos: (state) => state.todos,
+    filteredTodos: state => {
+      let todos = state.todos;
+      let status = state.filterQuery.status;
+      let priority = state.filterQuery.priority;
+
+      if(!(status == 0)) {
+        todos = todos.filter(todo => {
+          return todo.status == status;
+        });
+      }
+      if(!(priority == 0)) {
+        todos = todos.filter(todo => {
+          return todo.priority == priority;
+        });
+      }
+      return todos;
+    }
   },
   actions: {
+    changeFilterQuery(query) {
+      this.filterQuery.status = query.status;
+      this.filterQuery.priority = query.priority;
+    },
     updateTodos({ id, status, taskName, priority, memo }) {
       const updateIndex = this.todos.findIndex((todo) => todo.id == id);
       const updateTodo = {
@@ -69,12 +130,12 @@ export const useTodoStore = defineStore("todos", {
 
     changePriority({ id }) {
       const changePriorityTodo = this.todos.find((e) => e.id === id);
-      if (changePriorityTodo.priority === "低") {
-        changePriorityTodo.priority = "中";
-      } else if (changePriorityTodo.priority === "中") {
-        changePriorityTodo.priority = "高";
+      if (changePriorityTodo.priority === 3) {
+        changePriorityTodo.priority = 2;
+      } else if (changePriorityTodo.priority === 2) {
+        changePriorityTodo.priority = 1;
       } else {
-        changePriorityTodo.priority = "低";
+        changePriorityTodo.priority = 3;
       }
     },
     changeTodoState(id) {
