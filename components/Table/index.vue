@@ -3,7 +3,9 @@ import { computed } from "vue";
 import { useTodoStore } from "@/store/index";
 const store = useTodoStore();
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+const priorityTexts = store.priorityText;
 const todos = computed(() => store.filteredTodos);
+
 const emit = defineEmits(["edit-todo", "change-handler"]);
 const editTodo = (item) => emit("edit-todo", item);
 
@@ -69,18 +71,15 @@ const changeHandler = (id) => emit("change-handler", id);
               @change="changeStatus(todo)"
               v-model="todo.status"
               :class="[
-                'text-center  mx-auto rounded-4xl ',
-                todo.status === '進行中' ? 'bg-blue-100' : '',
-                todo.status === '進行中' ? 'text-blue-700' : '',
-                todo.status === '着手前' ? 'bg-orange-100' : '',
-                todo.status === '着手前' ? 'text-orange-700' : '',
-                todo.status === '完了' ? 'bg-green-100' : '',
-                todo.status === '完了' ? 'text-green-700' : '',
+                'text-center mx-auto rounded-4xl ',
+                todo.status == 1 ? 'bg-blue-100 text-blue-700' : '',
+                todo.status == 2 ? 'bg-orange-100 text-orange-700' : '',
+                todo.status == 3 ? 'bg-green-100 text-green-700' : '',
               ]"
             >
-              <option>着手前</option>
-              <option>進行中</option>
-              <option>完了</option>
+            <option value=1>着手前</option>
+            <option value=2>進行中</option>
+            <option value=3>完了</option>
             </select>
           </div>
           <div class="table-cell">
@@ -91,12 +90,12 @@ const changeHandler = (id) => emit("change-handler", id);
               <div
                 :class="[
                   'text-center w-15px h-15px rounded-1/2 border-3 ',
-                  todo.priority === '低' ? 'border-green-500' : '',
-                  todo.priority === '中' ? 'border-yellow-500' : '',
-                  todo.priority === '高' ? 'border-red-500' : '',
+                  todo.priority == 1 ? 'border-red-500' : '',
+                  todo.priority == 2 ? 'border-yellow-500' : '',
+                  todo.priority == 3 ? 'border-green-500' : '',
                 ]"
               />
-              <span class="ml-2">{{ todo.priority }}</span>
+              <span class="ml-2">{{ priorityTexts[todo.priority].text }}</span>
             </button>
           </div>
           <div class="table-cell">
