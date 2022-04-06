@@ -59,22 +59,15 @@ const allDelteTodo = () => {
         <div>
           <div>
             <div v-if="countAllItem" class="flex">
-              <div v-if="filterQuery.status == 0 && filterQuery.priority == 0">すべての</div>
-              <div v-else-if="filterQuery.status !== 0 && filterQuery.priority !== 0">
-                <p>
-                  ステータスが<span class="text-pink-500">{{ statusTexts[filterQuery.status].text }}</span>且つ、
-                  優先度が「<span class="text-pink-500">{{ priorityTexts[filterQuery.priority].text }}</span>」の
-                </p>
-              </div>
-              <div v-else-if="filterQuery.status !== 0 || filterQuery.priority == 0">
-                <p>ステータスが<span class="text-pink-500">{{ statusTexts[filterQuery.status].text }}</span>の</p>
-              </div>
-              <div v-else-if="filterQuery.status == 0 || filterQuery.priority !== 0">
-                <p>優先度が<span class="text-pink-500">{{ priorityTexts[filterQuery.priority].text }}</span>の</p>
-              </div>
-              <p>タスクは</p>
-              <p v-if="countItem"><span class="text-pink-500">{{ countItem }}</span>個あります</p>
-              <p v-else>ありません</p>
+              <p>
+                {{ filterQuery.status == 0 && filterQuery.priority == 0 ? 'すべての' : '' }}
+                {{ filterQuery.status !== 0 ? `ステータスが${statusTexts[filterQuery.status].text}` : '' }}
+                {{ filterQuery.status !== 0 && filterQuery.priority == 0 ? 'の' : '' }}
+                {{ filterQuery.status !== 0 && filterQuery.priority !== 0 ? '且つ、' : '' }}
+                {{ filterQuery.priority !== 0 ? `優先度が「${priorityTexts[filterQuery.priority].text}」の` : '' }}
+                タスクは
+                {{ countItem ? `${countItem}個あります` : 'ありません。' }}
+              </p>
             </div>
             <div v-else>
               <p class="allDone">
