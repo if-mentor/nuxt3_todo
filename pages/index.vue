@@ -5,7 +5,6 @@ import { computed, watch } from "vue";
 const store = useTodoStore();
 const router = useRouter();
 //VueRouter設定
-
 // 絞り込み後のタスク
 const todos = computed(() => {
   return store.filteredTodos;
@@ -31,7 +30,6 @@ const filterQuery = {
   status: 0,
   priority: 0,
 };
-
 // 絞り込みを行った際の処理
 const changeFilterQuery = (changeFilterItem) => {
   store.changeFilterQuery(filterQuery);
@@ -43,7 +41,6 @@ const allDelteTodo = () => {
   if (!result) return;
   store.allDeleteTodo();
 };
-
 </script>
 
 <template>
@@ -58,27 +55,22 @@ const allDelteTodo = () => {
       <div class="text-xl">
         <div>
           <div>
-            <div v-show="display_flag === 'condition'">
-              <div v-if="remainingItemAmount">
-                <p>ステータスが<span class="text-pink-500">{{ state }}</span>のタスクは<span class="text-pink-500">{{ remainingItemAmount }}</span>個あります</p>
-              </div>
-              <div v-else>ステータスが<span class="text-pink-500">{{ state }}</span>のタスクはありません</div>
+            <div v-if="countAllItem" class="flex">
+              <p>
+                {{ filterQuery.status == 0 && filterQuery.priority == 0 ? 'すべての' : '' }}
+                {{ filterQuery.status !== 0 ? `ステータスが${statusTexts[filterQuery.status].text}` : '' }}
+                {{ filterQuery.status !== 0 && filterQuery.priority == 0 ? 'の' : '' }}
+                {{ filterQuery.status !== 0 && filterQuery.priority !== 0 ? '且つ、' : '' }}
+                {{ filterQuery.priority !== 0 ? `優先度が「${priorityTexts[filterQuery.priority].text}」の` : '' }}
+                タスクは
+                {{ countItem ? `${countItem}個あります` : 'ありません。' }}
+              </p>
             </div>
-
-            <div v-show="display_flag === 'priority'">
-              <div v-if="remainingItemAmount">
-                <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクは<span class="text-pink-500">{{ remainingItemAmount }}</span>個あります</p>
-              </div>
-              <div v-else>
-                <p>優先度が<span class="text-pink-500">{{ priority }}</span>のタスクはありません</p>
-              </div>
+            <div v-else>
+              <p class="allDone">
+                Congratulations!! Nothing to do!!!
+              </p>
             </div>
-
-            <div v-show="display_flag === 'noItem'">
-              <p :class="{allDone: noItemClass}">Congratulations!! Nothing to do!!!</p>
-            </div>
-
-
           </div>
         </div>
       </div>
@@ -102,11 +94,13 @@ const allDelteTodo = () => {
       </div>
       <div class="ml-5">
         <p>ステータス</p>
-        <select name="status" class="border w-177px" v-model="state" @change="display_flag = 'condition'">
-          <option value="すべて" selected>すべて</option>
-          <option value="着手前">着手前</option>
-          <option value="進行中">進行中</option>
-          <option value="完了">完了</option>
+        <select
+          name="status"
+          class="border w-177px"
+          v-model="filterQuery.status"
+          @change="changeFilterQuery('status')"
+        >
+          <option v-for="statusText in statusTexts" :key="statusText.value" :value="statusText.value">{{ statusText.text }}</option>
         </select>
       </div>
       <div class="ml-5">
@@ -125,72 +119,11 @@ const allDelteTodo = () => {
   </div>
 </template>
 
-<script>
-import { useRouter } from 'vue-router'
-import { useTodoStore } from "@/store/index";
-import { computed, watch } from "vue";
-export default {
-  setup(){
-    const store = useTodoStore();
-    const router = useRouter();
-    //VueRouter設定
-    const todos = computed(() => store.filteredTodos)
-    const EditTodo = todo => { router.push(`/edit/${todo.id}`) }
-    const changeHandler = id => store.changeTodoState(id);
-    const  allDelteTodo = () => {
-      const message = "選択された項目を全て削除してもよろしいでしょうか?"
-      const result = window.confirm(message)
-      if(!result) return
-      store.allDeleteTodo();
-    }
-
-    const state = ref('すべて');
-    const priority = ref('すべて')
-    const noItemClass = ref(false)
-    const display_flag = ref('condition')
-
-    const remainingItemAmount = computed(() => {
-      let computedItemLength = '';
-      switch(display_flag.value){
-        case 'condition':
-          const filteredStateItems = todos.value.filter(todo => state.value === "すべて" ? todo : todo.status === state.value)
-          computedItemLength = filteredStateItems.length
-          break;
-        case 'priority':
-          const filteredPriorityItems = todos.value.filter(todo => priority.value === 'すべて' ? todo : todo.priority === priority.value)
-          computedItemLength = filteredPriorityItems.length
-          break;
-      }
-      return computedItemLength
-    })
-
-    watch(todos, ()=> {
-      remainingItemAmount.value
-      if(todos.value.length === 0){
-        display_flag.value = 'noItem'
-        noItemClass.value = true;
-      }
-    }, {deep: true})
-
-
-    return {
-      EditTodo,
-      changeHandler,
-      allDelteTodo,
-      todos,
-      state,
-      priority,
-      remainingItemAmount,
-      display_flag,
-      noItemClass,
-      }
-  },
-}
-
-</script>
-
-<style>
+<style scoped>
 .allDone {
   color: gold;
+}
+.flex {
+  display: flex;
 }
 </style>
