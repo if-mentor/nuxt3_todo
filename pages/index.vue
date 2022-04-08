@@ -1,8 +1,57 @@
+<script setup>
+import { useRouter } from "vue-router";
+import { useTodoStore } from "@/store/index";
+import { computed, watch } from "vue";
+const store = useTodoStore();
+const router = useRouter();
+//VueRouter設定
+
+// 絞り込み後のタスク
+const todos = computed(() => {
+  return store.filteredTodos;
+});
+// 絞り込み後のタスク数
+const countItem = computed(() => {
+  return todos.value.length;
+});
+// 全体タスク数
+const countAllItem = computed(() => {
+  return store.todos.length;
+});
+const EditTodo = (todo) => {
+  router.push(`/edit/${todo.id}`);
+};
+// タスクのステータスオブジェクト
+const statusTexts = store.statusText;
+// タスクの優先度オブジェクト
+const priorityTexts = store.priorityText;
+// フィルターの内容
+const filterQuery = {
+  keywords: '',
+  status: 0,
+  priority: 0,
+};
+
+// 絞り込みを行った際の処理
+const changeFilterQuery = (changeFilterItem) => {
+  store.changeFilterQuery(filterQuery);
+};
+const changeHandler = (id) => store.changeTodoState(id);
+const allDelteTodo = () => {
+  const message = "選択された項目を全て削除してもよろしいでしょうか?";
+  const result = window.confirm(message);
+  if (!result) return;
+  store.allDeleteTodo();
+};
+
+</script>
 
 <template>
   <div>
     <header>
-      <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">Todoアプリ</h1>
+      <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">
+        Todoアプリ
+      </h1>
     </header>
 
     <div class="flex mt-10 ml-5">
@@ -35,16 +84,21 @@
       </div>
       <button
         class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
-      >+ タスクを追加</button>
+      >
+        + タスクを追加
+      </button>
       <button
-        class="text-white bg-blue-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70" @click="allDelteTodo"
-      >- 選択されたタスクを削除</button>
+        class="text-white bg-blue-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
+        @click="allDelteTodo"
+      >
+        - 選択されたタスクを削除
+      </button>
     </div>
 
     <div class="flex mt-10 ml-5">
       <div>
         <p>キーワード</p>
-        <input type="text" placeholder="キーワードを入力" class="border" />
+        <input type="text" placeholder="キーワードを入力" class="border" v-model="filterQuery.keywords" />
       </div>
       <div class="ml-5">
         <p>ステータス</p>
@@ -57,11 +111,13 @@
       </div>
       <div class="ml-5">
         <p>優先度</p>
-        <select name="priority" class="border w-177px" v-model="priority" @change="display_flag = 'priority'">
-          <option value="すべて" selected>すべて</option>
-          <option value="高">高</option>
-          <option value="中">中</option>
-          <option value="低">低</option>
+        <select
+          name="priority"
+          class="border w-177px"
+          v-model="filterQuery.priority"
+          @change="changeFilterQuery('priority')"
+        >
+          <option v-for="priorityText in priorityTexts" :key="priorityText.value" :value="priorityText.value">{{ priorityText.text }}</option>
         </select>
       </div>
     </div>
