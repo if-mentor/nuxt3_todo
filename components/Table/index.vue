@@ -115,13 +115,15 @@ const changeHandler = (id) => emit("change-handler", id);
         </div>
       </div>
     </div>
-    <div
+
+    <!-- <div
       v-show="isToast"
       class="card w-96 bg-info shadow-xl fixed bottom-0 right-0 bg-info animate-bounce"
     >
       <div class="card-body text-center">
         <p class="text-info-content">削除しました</p>
       </div>
-    </div>
+    </div> -->
+
   </div>
 </template>

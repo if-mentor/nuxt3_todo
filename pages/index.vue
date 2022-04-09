@@ -5,7 +5,6 @@ import { computed, watch } from "vue";
 const store = useTodoStore();
 const router = useRouter();
 //VueRouter設定
-
 // 絞り込み後のタスク
 const todos = computed(() => {
   return store.filteredTodos;
@@ -31,7 +30,6 @@ const filterQuery = {
   status: 0,
   priority: 0,
 };
-
 // 絞り込みを行った際の処理
 const changeFilterQuery = (changeFilterItem) => {
   store.changeFilterQuery(filterQuery);
@@ -43,7 +41,6 @@ const allDelteTodo = () => {
   if (!result) return;
   store.allDeleteTodo();
 };
-
 </script>
 
 <template>
