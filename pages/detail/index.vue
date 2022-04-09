@@ -1,4 +1,5 @@
 <template>
+<div>
 
   <header class="bg-gray-500 py-5">
     <h1 class="ml-12 text-white text-3xl">Todoアプリ</h1>
@@ -34,7 +35,7 @@
           </div>
 
           <div class="table-row">
-            <div class="table-cell tex-center whitespace-nowrap border-b-2 py-10">
+            <div class="table-cell text-center whitespace-nowrap border-b-2 py-10">
               優先度
               <span class="ml-20">:</span>
             </div>
@@ -44,18 +45,16 @@
         </div>
     </div>
 
-
-    <div class="bg-gray-500
-                cursor-pointer inline-block
-                p-2
-                float-right
+    <div class="p-4
                 mt-10
-                text-white
-                rounded-md
+                float-right
+                btn
+                btn-primary
                 ">
               戻る
-      </div>
     </div>
+    </div>
+</div>
 
 
 
