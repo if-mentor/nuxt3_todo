@@ -237,6 +237,7 @@ export default {
     const closePopUp = () => { isPopUp.value = false };
 
 
+
     return {
       progress,
       dominance,
