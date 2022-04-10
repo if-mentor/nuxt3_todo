@@ -56,6 +56,7 @@ const allDelteTodo = () => {
         <div>
           <div>
             <div v-if="countAllItem" class="flex">
+                    {{ $randomId() }}
               <p>
                 {{ filterQuery.status == 0 && filterQuery.priority == 0 ? 'すべての' : '' }}
                 {{ filterQuery.status !== 0 ? `ステータスが${statusTexts[filterQuery.status].text}` : '' }}
