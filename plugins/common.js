@@ -13,3 +13,9 @@ export default defineNuxtPlugin(nuxtApp => {
     }
   }
 })
+
+// script側は以下のように設定する
+// const { $randomId } = useNuxtApp()
+
+// 具体的な使い方は以下のURL参照
+// https://v3.nuxtjs.org/guide/directory-structure/plugins#automatically-providing-helpers
