@@ -115,7 +115,11 @@ const allDelteTodo = () => {
         </select>
       </div>
     </div>
-    <Table @edit-todo="EditTodo" @change-handler="changeHandler" />
+    <Table
+      @edit-todo="EditTodo"
+      @change-handler="changeHandler"
+      @move-detail-page="moveDetailPage"
+    />
   </div>
 </template>
 
