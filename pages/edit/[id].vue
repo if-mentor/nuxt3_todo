@@ -2,6 +2,7 @@
   <div>
     <header class="bg-gray-500 py-5">
       <h1 class="text-white text-2xl pl-4">TODOアプリ</h1>
+      {{ $randomId() }}
     </header>
     <div class="container mx-auto mt-20">
       <form>
