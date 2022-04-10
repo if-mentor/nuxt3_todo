@@ -49,7 +49,7 @@ const selectedPriority = computed(() => {
               タスク名
               <span class="ml-15">:</span>
             </div>
-            <div class="table-cell pl-30 border-b-2">{{ selectedTodo.taskName }}</div>
+            <div class="table-cell pl-30 border-b-2 cursor-pointer">{{ selectedTodo.taskName }}</div>
           </div>
 
           <div class="table-row">

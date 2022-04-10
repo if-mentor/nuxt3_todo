@@ -48,8 +48,9 @@ const moveDetailPage = todo => {
       <div class="table-row-group" v-for="todo in todos" :key="todo.id">
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
-            <input type="checkbox" @change="changeHandler(todo.id)" class="mx-2" />
-            <span class="text-blue-500" @click="moveDetailPage(todo)">{{ todo.taskName }}</span>
+            <input type="checkbox" @change="changeHandler(todo.id)" class="mx-2 inline-block" />
+            <span class="text-blue-500 hover:(text-blue-100) inline-block cursor-pointer"
+              @click="moveDetailPage(todo)">{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
