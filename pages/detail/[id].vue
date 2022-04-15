@@ -17,14 +17,13 @@ const selectedTodo = computed(() => {
 
 const selectedStusat = computed(() => {
   const selectedStusat = todos.statusText.find(status => {
-    // console.log( selectedTodo.value.status)
     return status.value === selectedTodo.value.status
-  })
+  });
   return selectedStusat.text
 
 })
 const selectedPriority = computed(() => {
-  const selectedPriority = todos.statusText.find(priority => {
+  const selectedPriority = todos.priorityText.find(priority => {
     return priority.value === selectedTodo.value.priority
   })
   return selectedPriority.text

@@ -123,9 +123,11 @@ export const useTodoStore = defineStore("todos", {
       };
       this.todos[updateIndex] = updateTodo;
     },
-    changeStatus({ id, status }) {
+    changeStatus({ id, status, taskName, priority, memo }) {
+      // console.log(id,status,taskName, priority, memo)
+      // console.log(typeof(Number(status)))
       const changeStatusTodo = this.todos.find((e) => e.id === id);
-      changeStatusTodo.status = status;
+      changeStatusTodo.status = Number(status);
     },
 
     changePriority({ id }) {
