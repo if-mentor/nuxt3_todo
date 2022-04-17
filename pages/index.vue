@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useTodoStore } from "@/store/index";
-import { computed, watch } from "vue";
+import { computed } from "vue";
 const store = useTodoStore();
 const router = useRouter();
 //VueRouter設定
@@ -31,7 +31,7 @@ const filterQuery = {
   priority: 0,
 };
 // 絞り込みを行った際の処理
-const changeFilterQuery = (changeFilterItem) => {
+const changeFilterQuery = () => {   
   store.changeFilterQuery(filterQuery);
 };
 const changeHandler = (id) => store.changeTodoState(id);
@@ -41,6 +41,11 @@ const allDelteTodo = () => {
   if (!result) return;
   store.allDeleteTodo();
 };
+const moveCreatePage = ()=>{
+  router.push('/create')
+}
+
+
 </script>
 
 <template>
@@ -74,15 +79,10 @@ const allDelteTodo = () => {
           </div>
         </div>
       </div>
-      <button
-        class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
-      >
+      <button class="text-white bg-gray-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70" @click="moveCreatePage">
         + タスクを追加
       </button>
-      <button
-        class="text-white bg-blue-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70"
-        @click="allDelteTodo"
-      >
+      <button class="text-white bg-blue-500 text-xs ml-5 py-2 px-4 rounded-lg bg-opacity-70" @click="allDelteTodo">
         - 選択されたタスクを削除
       </button>
     </div>
@@ -94,32 +94,23 @@ const allDelteTodo = () => {
       </div>
       <div class="ml-5">
         <p>ステータス</p>
-        <select
-          name="status"
-          class="border w-177px"
-          v-model="filterQuery.status"
-          @change="changeFilterQuery('status')"
-        >
-          <option v-for="statusText in statusTexts" :key="statusText.value" :value="statusText.value">{{ statusText.text }}</option>
+        <select name="status" class="border w-177px" v-model="filterQuery.status" @change="changeFilterQuery('status')">
+          <option v-for="statusText in statusTexts" :key="statusText.value" :value="statusText.value">{{
+            statusText.text
+          }}</option>
         </select>
       </div>
       <div class="ml-5">
         <p>優先度</p>
-        <select
-          name="priority"
-          class="border w-177px"
-          v-model="filterQuery.priority"
-          @change="changeFilterQuery('priority')"
-        >
-          <option v-for="priorityText in priorityTexts" :key="priorityText.value" :value="priorityText.value">{{ priorityText.text }}</option>
+        <select name="priority" class="border w-177px" v-model="filterQuery.priority"
+          @change="changeFilterQuery('priority')">
+          <option v-for="priorityText in priorityTexts" :key="priorityText.value" :value="priorityText.value">{{
+            priorityText.text
+          }}</option>
         </select>
       </div>
     </div>
-    <Table
-      @edit-todo="EditTodo"
-      @change-handler="changeHandler"
-      @move-detail-page="moveDetailPage"
-    />
+    <Table @edit-todo="EditTodo" @change-handler="changeHandler" />
   </div>
 </template>
 
@@ -127,6 +118,7 @@ const allDelteTodo = () => {
 .allDone {
   color: gold;
 }
+
 .flex {
   display: flex;
 }
