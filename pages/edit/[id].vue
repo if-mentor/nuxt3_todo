@@ -72,59 +72,14 @@
       </div>
 
       <div class="mt-20 flex justify-end">
-        <button class="btn bg-blue-700 w-20 mx-4 px-2">リセット</button>
-        <button class="btn w-20 mx-4 px-2" @click="goToHome">戻る</button>
-        <label for="my-modal" class="btn btn-primary w-20 mx-4 px-2">保存</label>
-      </div>
-      <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
-        <label class="basis-1/6">ステータス</label>
-        <label class="w-1">:</label>
-        <select class="w-20 ml-10" v-model="progress">
-          <option disabled>------</option>
-          <option value="進行中">進行中</option>
-          <option value="着手前">着手前</option>
-          <option value="着手">着手</option>
-          <option value="完了">完了</option>
-        </select>
-      </div>
-      <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
-        <label class="basis-1/6">優先度</label>
-        <label class="w-1">:</label>
-        <select class="w-20 ml-10" v-model="dominance">
-          <option disabled>------</option>
-          <option value="高">高</option>
-          <option value="中">中</option>
-          <option value="低">低</option>
-        </select>
-      </div>
-
-      <!-- モーダル -->
-      <input type="checkbox" id="my-modal" class="modal-toggle" />
-      <div class="modal">
-        <div class="modal-box z-2">
-          <h3 class="font-bold text-lg text-black">修正内容</h3>
-          <div class="py-4 text-black">
-            <p>タスク名: {{ title }}</p>
-            <p>内容: {{ content }}</p>
-            <p>ステータス: {{ progress }}</p>
-            <p>優先度: {{ dominance }}</p>
-          </div>
-          <div class="modal-action">
-            <label for="my-modal" class="btn btn-save" @click="saveData">この内容で保存する</label>
-            <label for="my-modal" class="btn btn-cancel">キャンセル</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-20 flex justify-end">
-        <button class="text-light-50 bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
+        <button class="btn bg-blue-700 w-20 h-10 mx-4 rounded-md px-2">リセット</button>
         <button
-          class="text-light-50 bg-gray-400 w-20 h-10 mx-4 rounded-md px-2"
+          class="btn w-20 h-10 mx-4 rounded-md px-2"
           @click="goToHome"
         >戻る</button>
         <label
           for="my-modal"
-          class="btn text-light-50 bg-sky-700 w-20 h-8 mx-4 rounded-md px-2 modal-button"
+          class="btn btn-primary w-20 h-8 mx-4 rounded-md px-2 modal-button"
         >保存</label>
       </div>
 
