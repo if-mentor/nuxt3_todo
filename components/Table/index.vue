@@ -29,9 +29,10 @@ const changePriority = (todo) => {
 };
 const changeHandler = (id) => emit("change-handler", id);
 
-const moveDetailPage = (todo) => {
-  router.push(`/detail/${todo.id}`);
-};
+const moveDetailPage = todo => {
+  router.push(`/detail/${todo.id}`)
+
+}
 </script>
 
 <template>
@@ -52,16 +53,11 @@ const moveDetailPage = (todo) => {
       <div class="table-row-group" v-for="todo in todos" :key="todo.id">
         <div class="table-row h-12">
           <div class="table-cell pt-3 w-350px">
-            <input
-              type="checkbox"
-              @change="changeHandler(todo.id)"
-              class="mx-2 inline-block"
-            />
+            <input type="checkbox" @change="changeHandler(todo.id)" class="mx-2 inline-block" />
             <span
               class="text-blue-500 hover:(text-blue-100) inline-block cursor-pointer"
               @click="moveDetailPage(todo)"
-              >{{ todo.taskName }}</span
-            >
+            >{{ todo.taskName }}</span>
           </div>
           <div class="table-cell pt-3">
             <button
@@ -88,16 +84,13 @@ const moveDetailPage = (todo) => {
                 todo.status == 3 ? 'bg-green-100 text-green-700' : '',
               ]"
             >
-              <option value=1>着手前</option>
-              <option value=2>進行中</option>
-              <option value=3>完了</option>
+              <option value="1">着手前</option>
+              <option value="2">進行中</option>
+              <option value="3">完了</option>
             </select>
           </div>
           <div class="table-cell">
-            <button
-              @click="changePriority(todo)"
-              class="flex justify-center items-center ml-6"
-            >
+            <button @click="changePriority(todo)" class="flex justify-center items-center ml-6">
               <div
                 :class="[
                   'text-center w-15px h-15px rounded-1/2 border-3 ',

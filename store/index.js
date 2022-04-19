@@ -44,37 +44,37 @@ export const useTodoStore = defineStore("todos", {
         },
       ],
       todos: [
-        {
-          id: 1,
-          taskName: "Github上に静的サイトをホスティングする",
-          status: 2,
-          priority: 3,
-          memo: "",
-          createDate: "2021-11-8 18:55:07",
-          updateDate: "2021-11-8 18:55:07",
-          memo: "",
-          isDeleted: false,
-        },
-        {
-          id: 2,
-          taskName: "ReactでTodoサイトを作成する",
-          status: 1,
-          priority: 2,
-          createDate: "2021-11-8 18:55:07",
-          updateDate: "2021-11-8 18:55:07",
-          memo: "",
-          isDeleted: false,
-        },
-        {
-          id: 3,
-          taskName: "Todoサイトで画面遷移できるようにする",
-          status: 1,
-          priority: 1,
-          createDate: "2021-11-8 18:55:07",
-          updateDate: "2021-11-8 18:55:07",
-          memo: "",
-          isDeleted: false,
-        },
+        // {
+        //   id: 1,
+        //   taskName: "Github上に静的サイトをホスティングする",
+        //   status: 2,
+        //   priority: 3,
+        //   memo: "",
+        //   createDate: "2021-11-8 18:55:07",
+        //   updateDate: "2021-11-8 18:55:07",
+        //   memo: "",
+        //   isDeleted: false,
+        // },
+        // {
+        //   id: 2,
+        //   taskName: "ReactでTodoサイトを作成する",
+        //   status: 1,
+        //   priority: 2,
+        //   createDate: "2021-11-8 18:55:07",
+        //   updateDate: "2021-11-8 18:55:07",
+        //   memo: "",
+        //   isDeleted: false,
+        // },
+        // {
+        //   id: 3,
+        //   taskName: "Todoサイトで画面遷移できるようにする",
+        //   status: 1,
+        //   priority: 1,
+        //   createDate: "2021-11-8 18:55:07",
+        //   updateDate: "2021-11-8 18:55:07",
+        //   memo: "",
+        //   isDeleted: false,
+        // },
       ],
       editTodo: null,
       filterQuery: {
@@ -161,6 +161,10 @@ export const useTodoStore = defineStore("todos", {
           }
         });
       });
+    },
+    addTodo(todoItem) {
+      console.log(todoItem)
+      this.todos.push(todoItem);
     },
   },
 });
