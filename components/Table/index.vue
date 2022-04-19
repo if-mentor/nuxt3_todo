@@ -7,7 +7,7 @@ const store = useTodoStore();
 const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
 const priorityTexts = store.priorityText;
 const todos = computed(() => store.filteredTodos);
-const router = useRouter()
+const router = useRouter();
 
 const emit = defineEmits(["edit-todo", "change-handler"]);
 const editTodo = (item) => emit("edit-todo", item);
@@ -44,7 +44,9 @@ const moveDetailPage = todo => {
             class="table-cell px-5 font-bold pl-5 p-2 text-center"
             v-for="item in items"
             :key="item"
-          >{{ item }}</div>
+          >
+            {{ item }}
+          </div>
         </div>
       </div>
 
