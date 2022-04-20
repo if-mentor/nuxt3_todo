@@ -82,6 +82,8 @@ export const useTodoStore = defineStore("todos", {
         status: 0,
         priority: 0,
       },
+      sortKey: '',
+      sortAsc: true,
     };
   },
 
@@ -159,6 +161,22 @@ export const useTodoStore = defineStore("todos", {
           }
         });
       });
+    },
+    sortTodos(item) {
+      this.sortKey === item ? (this.sortAsc = !this.sortAsc) : (this.sortAsc = true);
+      this.sortKey = item;
+      if (this.sortKey != '') {
+        this.todos.sort((a, b) => {
+          let set = 1;
+          this.sortAsc ? (set = 1) : (set = -1);
+          if (a[this.sortKey] < b[this.sortKey]) return -1 * set;
+          if (a[this.sortKey] > b[this.sortKey]) return 1 * set;
+          return 0;
+        });
+        return this.todos;
+      } else {
+        return this.todos;
+      }
     },
   },
 });
