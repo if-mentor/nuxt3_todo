@@ -129,7 +129,7 @@ select {
   width: 400px;
   padding: 8px 16px;
   border-radius: 4px;
-  background-color: #c3e6cb;
+  background-color: lightgreen;
   position: fixed;
   bottom: 30px;
   right: 12px;

@@ -12,13 +12,12 @@ const router = useRouter();
 const emit = defineEmits(["edit-todo", "change-handler"]);
 const editTodo = (item) => emit("edit-todo", item);
 
-let isToast = ref(false);
-const deleteTodo = async (todo) => {
+
+
+
+const deleteTodo = (todo) => {
   if (window.confirm("削除してよろしいでしょうか")) {
-    store.deleteTodo(todo);
-    isToast.value = true;
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    isToast.value = false;
+    store.deleteTodo({todo: todo, isPopup: true});
   }
 };
 const changeStatus = (todo) => {

@@ -44,39 +44,39 @@ export const useTodoStore = defineStore("todos", {
         },
       ],
       todos: [
-        // {
-        //   id: 1,
-        //   taskName: "Github上に静的サイトをホスティングする",
-        //   status: 2,
-        //   priority: 3,
-        //   memo: "",
-        //   createDate: "2021-11-8 18:55:07",
-        //   updateDate: "2021-11-8 18:55:07",
-        //   memo: "",
-        //   isDeleted: false,
-        // },
-        // {
-        //   id: 2,
-        //   taskName: "ReactでTodoサイトを作成する",
-        //   status: 1,
-        //   priority: 2,
-        //   createDate: "2021-11-8 18:55:07",
-        //   updateDate: "2021-11-8 18:55:07",
-        //   memo: "",
-        //   isDeleted: false,
-        // },
-        // {
-        //   id: 3,
-        //   taskName: "Todoサイトで画面遷移できるようにする",
-        //   status: 1,
-        //   priority: 1,
-        //   createDate: "2021-11-8 18:55:07",
-        //   updateDate: "2021-11-8 18:55:07",
-        //   memo: "",
-        //   isDeleted: false,
-        // },
+        {
+          id: 1,
+          taskName: "Github上に静的サイトをホスティングする",
+          status: 2,
+          priority: 3,
+          memo: "",
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+          memo: "",
+          isDeleted: false,
+        },
+        {
+          id: 2,
+          taskName: "ReactでTodoサイトを作成する",
+          status: 1,
+          priority: 2,
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+          memo: "",
+          isDeleted: false,
+        },
+        {
+          id: 3,
+          taskName: "Todoサイトで画面遷移できるようにする",
+          status: 1,
+          priority: 1,
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+          memo: "",
+          isDeleted: false,
+        },
       ],
-      editTodo: null,
+      isPopup: false,
       filterQuery: {
         keywords: '',
         status: 0,
@@ -146,9 +146,10 @@ export const useTodoStore = defineStore("todos", {
         .isDeleted;
       console.log(changeStateIndex);
     },
-    deleteTodo({ id }) {
-      const deleteIndex = this.todos.findIndex((e) => e.id === id);
+    deleteTodo( payload ) {
+      const deleteIndex = this.todos.findIndex((todo) => todo.id === payload.todo.id);
       this.todos.splice(deleteIndex, 1);
+      this.isPopup = payload.isPopup;
     },
     allDeleteTodo() {
       const doneTodo = this.todos.filter((todo) => todo.isDeleted === true);
