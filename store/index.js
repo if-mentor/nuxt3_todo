@@ -175,9 +175,9 @@ export const useTodoStore = defineStore("todos", {
         this.todos.sort((a, b) => {
           let set = 1;
           this.sortAsc ? (set = 1) : (set = -1);
-          if (a[this.sortKey] < b[this.sortKey]) return -1 * set;
-          if (a[this.sortKey] > b[this.sortKey]) return 1 * set;
-          return 0;
+          a = a[this.sortKey];
+          b = b[this.sortKey];
+          return ( a === b ? 0 : a > b ? 1 : -1 ) * set;
         });
         return this.todos;
       } else {
