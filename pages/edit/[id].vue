@@ -104,16 +104,6 @@ select {
   color: white;
 }
 
-.close-container {
-  position: relative;
-}
-
-.close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-}
 
 .modal-box {
   background: #fff;
