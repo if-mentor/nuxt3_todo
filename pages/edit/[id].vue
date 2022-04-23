@@ -32,10 +32,9 @@
             v-model="todoObj.status"
           >
             <option disabled>------</option>
-            <option value="進行中">進行中</option>
-            <option value="着手前">着手前</option>
-            <option value="着手">着手</option>
-            <option value="完了">完了</option>
+            <option value="1">着手前</option>
+            <option value="2">進行中</option>
+            <option value="3">完了</option>
           </select>
         </div>
         <div class="whitespace-nowrap border-b-2 flex py-4 w-full">
@@ -45,10 +44,9 @@
             class="select select-primary w-full max-w-xs w-30 ml-10 select-sm w-full max-w-xs focus:outline-none"
             v-model="todoObj.priority"
           >
-            <option disabled>------</option>
-            <option value="高">高</option>
-            <option value="中">中</option>
-            <option value="低">低</option>
+            <option value="1">高</option>
+            <option value="2">中</option>
+            <option value="3">低</option>
           </select>
         </div>
       </form>
@@ -83,13 +81,9 @@
         >保存</label>
       </div>
 
+      <Toast>保存されました</Toast>
+
       <!-- ポップアップ -->
-      <div v-show="isPopUp" :class="{ popMessage: isPopUp }">
-        <div class="close-container">
-          <span class="close" @click="closePopUp">✖︎</span>
-        </div>
-        <p class="text-black">保存されました</p>
-      </div>
     </div>
   </div>
 </template>
@@ -125,88 +119,54 @@ select {
   background: #fff;
 }
 
-.popMessage {
-  width: 400px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  background-color: lightgreen;
-  position: fixed;
-  bottom: 30px;
-  right: 12px;
 
-  animation: pop 3s forwards;
-}
 
-@keyframes pop {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-    animation-timing-function: ease-out;
-  }
-  20%,
-  80% {
-    transform: none;
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(20px);
-    opacity: 1;
-  }
-}
 </style>
 
 <script>
 import { useTodoStore } from "@/store/index";
 import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import Toast from '@/components/toast.vue'
 
 export default {
-  setup() {
-    const router = useRouter();
-    const route = useRoute();
-    const store = useTodoStore();
-    const id = route.params.id;
-    const todos = computed(() => store.filteredTodos.find(todo => todo.id == id));
-    const { taskName, status, priority, memo } = todos.value
-    const dominance = ref(priority);
-    const progress = ref(status);
-    const content = ref(memo);
-    const title = ref(taskName);
-    const isPopUp = ref(false);
-
-    //更新する内容
-    const todoObj = reactive({
-      id,
-      status: progress.value,
-      priority: dominance.value,
-      content: content.value,
-      taskName: title.value,
-      memo: content.value,
-    });
-
-    const saveData = () => {
-      store.updateTodos(todoObj)
-      isPopUp.value = true;
-    };
-    const goToHome = () => { router.push('/') };
-    const closePopUp = () => { isPopUp.value = false };
-
-
-
-    return {
-      progress,
-      dominance,
-      content,
-      title,
-      todos,
-      todoObj,
-      saveData,
-      goToHome,
-      isPopUp,
-      closePopUp
-    };
-
-  },
+    setup() {
+        const router = useRouter();
+        const route = useRoute();
+        const store = useTodoStore();
+        const id = route.params.id;
+        const todos = computed(() => store.filteredTodos.find(todo => todo.id == id));
+        const { taskName, status, priority, memo } = todos.value;
+        const dominance = ref(priority)
+        const progress = ref(status)
+        const content = ref(memo);
+        const title = ref(taskName);
+        //更新する内容
+        const todoObj = reactive({
+            id,
+            status: progress.value,
+            priority: dominance.value,
+            content: content.value,
+            taskName: title.value,
+            memo: content.value,
+        });
+        const saveData = () => {
+            store.updateTodos(todoObj);
+            store.popUp();
+        };
+        const goToHome = () => { router.push("/"); };
+        return {
+            progress,
+            dominance,
+            content,
+            title,
+            todos,
+            todoObj,
+            saveData,
+            goToHome,
+        };
+    },
+    components: { Toast }
 }
 
 </script>

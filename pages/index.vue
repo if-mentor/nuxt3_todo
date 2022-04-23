@@ -2,6 +2,7 @@
 import { useRouter } from "vue-router";
 import { useTodoStore } from "@/store/index";
 import { computed } from "vue";
+import Toast from "@/components/Toast.vue";
 const store = useTodoStore();
 const router = useRouter();
 //VueRouter設定
@@ -45,21 +46,19 @@ const moveCreatePage = ()=>{
   router.push('/create')
 }
 
-const isPopUp = computed(() => store.isPopup)
 
-const closePopUp = () => {
-  store.isPopup = false;
-}
 
 </script>
 
 <template>
+
   <div>
     <header>
       <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">
         Todoアプリ
       </h1>
     </header>
+
 
     <div class="flex mt-10 ml-5">
       <div class="text-xl">
@@ -116,13 +115,9 @@ const closePopUp = () => {
       </div>
     </div>
     <Table @edit-todo="EditTodo" @change-handler="changeHandler" />
-     <div v-show="isPopUp" :class="{ popMessage: isPopUp }">
-        <div class="close-container">
-          <span class="close" @click="closePopUp">✖︎</span>
-        </div>
-        <p class="text-black">削除されました</p>
-      </div>
+    <Toast>削除されました</Toast>
   </div>
+
 </template>
 
 <style scoped>
@@ -134,32 +129,5 @@ const closePopUp = () => {
   display: flex;
 }
 
-.popMessage {
-  width: 400px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  background-color: lightgreen;
-  position: fixed;
-  bottom: 30px;
-  right: 12px;
 
-  animation: pop 3s forwards;
-}
-
-@keyframes pop {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-    animation-timing-function: ease-out;
-  }
-  20%,
-  80% {
-    transform: none;
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(20px);
-    opacity: 1;
-  }
-}
 </style>

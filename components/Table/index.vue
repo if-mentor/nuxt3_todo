@@ -17,7 +17,8 @@ const editTodo = (item) => emit("edit-todo", item);
 
 const deleteTodo = (todo) => {
   if (window.confirm("削除してよろしいでしょうか")) {
-    store.deleteTodo({todo: todo, isPopup: true});
+    store.deleteTodo(todo);
+    store.popUp();
   }
 };
 const changeStatus = (todo) => {

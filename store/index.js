@@ -7,6 +7,7 @@ export const useTodoStore = defineStore("todos", {
     return {
       //配列でtodosを持つ
       //呼び出し時にIdが一致するものをとっていく
+      isPopUp: false,
       statusText: [
         {
           value: 0,
@@ -76,7 +77,6 @@ export const useTodoStore = defineStore("todos", {
           isDeleted: false,
         },
       ],
-      isPopup: false,
       filterQuery: {
         keywords: '',
         status: 0,
@@ -146,10 +146,9 @@ export const useTodoStore = defineStore("todos", {
         .isDeleted;
       console.log(changeStateIndex);
     },
-    deleteTodo( payload ) {
-      const deleteIndex = this.todos.findIndex((todo) => todo.id === payload.todo.id);
+    deleteTodo( { id } ) {
+      const deleteIndex = this.todos.findIndex((todo) => todo.id === id);
       this.todos.splice(deleteIndex, 1);
-      this.isPopup = payload.isPopup;
     },
     allDeleteTodo() {
       const doneTodo = this.todos.filter((todo) => todo.isDeleted === true);
@@ -167,5 +166,8 @@ export const useTodoStore = defineStore("todos", {
       console.log(todoItem)
       this.todos.push(todoItem);
     },
+    popUp(){
+      this.isPopUp = !this.isPopUp
+    }
   },
 });
