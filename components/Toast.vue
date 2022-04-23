@@ -42,6 +42,18 @@ const closePopUp = () => {
   animation: pop 3s forwards;
 }
 
+.close-container {
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+
 @keyframes pop {
   0% {
     transform: translateY(20px);
