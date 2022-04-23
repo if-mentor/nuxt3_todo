@@ -82,6 +82,8 @@ export const useTodoStore = defineStore("todos", {
         status: 0,
         priority: 0,
       },
+      sortKey: '',
+      sortAsc: true,
     };
   },
 
@@ -165,6 +167,22 @@ export const useTodoStore = defineStore("todos", {
     addTodo(todoItem) {
       console.log(todoItem)
       this.todos.push(todoItem);
+    },
+    sortTodos(item) {
+      this.sortKey === item ? (this.sortAsc = !this.sortAsc) : (this.sortAsc = true);
+      this.sortKey = item;
+      if (this.sortKey != '') {
+        this.todos.sort((a, b) => {
+          let set = 1;
+          this.sortAsc ? (set = 1) : (set = -1);
+          a = a[this.sortKey];
+          b = b[this.sortKey];
+          return ( a === b ? 0 : a > b ? 1 : -1 ) * set;
+        });
+        return this.todos;
+      } else {
+        return this.todos;
+      }
     },
   },
 });

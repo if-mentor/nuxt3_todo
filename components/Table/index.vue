@@ -4,7 +4,32 @@ import { useTodoStore } from "@/store/index";
 import { useRouter } from "vue-router";
 
 const store = useTodoStore();
-const items = ["タスク名", "", "ステータス", "優先度", "作成日時", "更新日時"];
+const items = [
+    {
+    value: "taskName",
+    text:"タスク名"
+  },
+  {
+    value: "",
+    text: "",
+  },
+  {
+    value: "",
+    text:"ステータス", 
+  },
+  {
+    value: "",
+    text:"優先度",
+  },
+  {
+    value: "createDate",
+    text:"作成日時",
+  },
+  {
+    value: "updateDate",
+    text:"更新日時"
+  },
+];
 const priorityTexts = store.priorityText;
 const todos = computed(() => store.filteredTodos);
 const router = useRouter();
@@ -33,6 +58,21 @@ const moveDetailPage = todo => {
   router.push(`/detail/${todo.id}`)
 
 }
+
+// ソート機能を行った際の昇順降順アイコン処理
+const changeSortIcon = (item) => {
+    if(item != '') {
+      return {
+        'asc': store.sortKey === item && store.sortAsc,
+        'desc': store.sortKey === item && !store.sortAsc,
+      }
+    }
+};
+// ソート機能を行った際の処理
+const sortTodos = (item) => {
+  store.sortTodos(item);
+};
+
 </script>
 
 <template>
@@ -41,11 +81,13 @@ const moveDetailPage = todo => {
       <div class="table-header-group pb-10">
         <div class="table-row bg-gray-500/50 bg-opacity-10">
           <div
-            class="table-cell px-5 font-bold pl-5 p-2 text-center"
+            class="table-cell px-5 font-bold pl-5 p-2 text-center relative" 
             v-for="item in items"
             :key="item"
+            @click="sortTodos(item.value)" 
+            :class="changeSortIcon(item.value)"
           >
-            {{ item }}
+            {{ item.text }}
           </div>
         </div>
       </div>
@@ -117,3 +159,23 @@ const moveDetailPage = todo => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.asc::after {
+  content: "▲";
+  position: absolute;
+  font-size: 70%;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+.desc::after {
+  content: "▼";
+  position: absolute;
+  font-size: 70%;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+</style>
