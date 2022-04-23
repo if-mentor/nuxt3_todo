@@ -59,8 +59,8 @@
           <div class="py-4 text-black">
             <p>タスク名: {{ todoObj.taskName }}</p>
             <p>内容: {{ todoObj.memo }}</p>
-            <p>ステータス: {{ todoObj.status }}</p>
-            <p>優先度: {{ todoObj.priority }}</p>
+            <p>ステータス: <span>{{ statusText }}</span></p>
+            <p>優先度: <span>{{ priorityText }}</span></p>
           </div>
           <div class="modal-action">
             <label for="my-modal" class="btn btn-primary" @click="saveData">この内容で保存する</label>
@@ -141,6 +141,7 @@ export default {
         const progress = ref(status)
         const content = ref(memo);
         const title = ref(taskName);
+
         //更新する内容
         const todoObj = reactive({
             id,
@@ -150,6 +151,28 @@ export default {
             taskName: title.value,
             memo: content.value,
         });
+
+        const statusText = computed(() => {
+          switch(progress.value){
+            case 1:
+              return '着手前'
+            case 2:
+              return '進行中'
+            case 3:
+              return '完了'
+          }
+        })
+
+          const priorityText = computed(() => {
+            switch(dominance.value){
+              case 1:
+                return '高'
+              case 2:
+                return '中'
+              case 3:
+                return '低'
+            }
+        })
         const saveData = () => {
             store.updateTodos(todoObj);
             store.popUp();
@@ -164,6 +187,8 @@ export default {
             todoObj,
             saveData,
             goToHome,
+            statusText,
+            priorityText,
         };
     },
     components: { Toast }
