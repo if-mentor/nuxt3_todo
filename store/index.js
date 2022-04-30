@@ -10,75 +10,75 @@ export const useTodoStore = defineStore("todos", {
       statusText: [
         {
           value: 0,
-          text: 'すべて',
+          text: "すべて",
         },
         {
           value: 1,
-          text: '着手前',
+          text: "着手前",
         },
         {
           value: 2,
-          text: '進行中',
+          text: "進行中",
         },
         {
           value: 3,
-          text: '完了',
+          text: "完了",
         },
       ],
       priorityText: [
         {
           value: 0,
-          text: 'すべて',
+          text: "すべて",
         },
         {
           value: 1,
-          text: '高',
+          text: "高",
         },
         {
           value: 2,
-          text: '中',
+          text: "中",
         },
         {
           value: 3,
-          text: '低',
+          text: "低",
         },
       ],
       todos: [
-        // {
-        //   id: 1,
-        //   taskName: "Github上に静的サイトをホスティングする",
-        //   status: 2,
-        //   priority: 3,
-        //   memo: "",
-        //   createDate: "2021-11-8 18:55:07",
-        //   updateDate: "2021-11-8 18:55:07",
-        //   memo: "",
-        //   isDeleted: false,
-        // },
-        // {
-        //   id: 2,
-        //   taskName: "ReactでTodoサイトを作成する",
-        //   status: 1,
-        //   priority: 2,
-        //   createDate: "2021-11-8 18:55:07",
-        //   updateDate: "2021-11-8 18:55:07",
-        //   memo: "",
-        //   isDeleted: false,
-        // },
-        // {
-        //   id: 3,
-        //   taskName: "Todoサイトで画面遷移できるようにする",
-        //   status: 1,
-        //   priority: 1,
-        //   createDate: "2021-11-8 18:55:07",
-        //   updateDate: "2021-11-8 18:55:07",
-        //   memo: "",
-        //   isDeleted: false,
-        // },
+        {
+          id: 1,
+          taskName: "Github上に静的サイトをホスティングする",
+          status: 2,
+          priority: 3,
+          memo: "",
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+          memo: "",
+          isDeleted: false,
+        },
+        {
+          id: 2,
+          taskName: "ReactでTodoサイトを作成する",
+          status: 1,
+          priority: 2,
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+          memo: "",
+          isDeleted: false,
+        },
+        {
+          id: 3,
+          taskName: "Todoサイトで画面遷移できるようにする",
+          status: 1,
+          priority: 1,
+          createDate: "2021-11-8 18:55:07",
+          updateDate: "2021-11-8 18:55:07",
+          memo: "",
+          isDeleted: false,
+        },
       ],
       editTodo: null,
       filterQuery: {
-        keywords: '',
+        keywords: "",
         status: 0,
         priority: 0,
       },
@@ -86,30 +86,38 @@ export const useTodoStore = defineStore("todos", {
       sortAsc: true,
     };
   },
-
   getters: {
-    filteredTodos: state => {
+    filteredTodos: (state) => {
       let todos = state.todos;
       let status = state.filterQuery.status;
       let priority = state.filterQuery.priority;
+      let keywords = state.filterQuery.keywords;
 
-      if(!(status == 0)) {
-        todos = todos.filter(todo => {
+      if (!(status == 0)) {
+        todos = todos.filter((todo) => {
           return todo.status == status;
         });
       }
-      if(!(priority == 0)) {
-        todos = todos.filter(todo => {
+      if (!(priority == 0)) {
+        todos = todos.filter((todo) => {
           return todo.priority == priority;
         });
       }
+      if (!(keywords == "")) {
+        const lowWords = keywords.toLowerCase();
+        todos = todos.filter((todo) => {
+          return todo.taskName.toLowerCase().includes(lowWords);
+        });
+      }
+
       return todos;
-    }
+    },
   },
   actions: {
     changeFilterQuery(query) {
       this.filterQuery.status = query.status;
       this.filterQuery.priority = query.priority;
+      this.filterQuery.keywords = query.keywords;
     },
     updateTodos({ id, status, taskName, priority, memo }) {
       const updateIndex = this.todos.findIndex((todo) => todo.id == id);
@@ -165,7 +173,7 @@ export const useTodoStore = defineStore("todos", {
       });
     },
     addTodo(todoItem) {
-      console.log(todoItem)
+      console.log(todoItem);
       this.todos.push(todoItem);
     },
     sortTodos(item) {
