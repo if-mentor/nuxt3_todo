@@ -11,37 +11,37 @@ export const useTodoStore = defineStore("todos", {
       statusText: [
         {
           value: 0,
-          text: 'すべて',
+          text: "すべて",
         },
         {
           value: 1,
-          text: '着手前',
+          text: "着手前",
         },
         {
           value: 2,
-          text: '進行中',
+          text: "進行中",
         },
         {
           value: 3,
-          text: '完了',
+          text: "完了",
         },
       ],
       priorityText: [
         {
           value: 0,
-          text: 'すべて',
+          text: "すべて",
         },
         {
           value: 1,
-          text: '高',
+          text: "高",
         },
         {
           value: 2,
-          text: '中',
+          text: "中",
         },
         {
           value: 3,
-          text: '低',
+          text: "低",
         },
       ],
       todos: [
@@ -78,36 +78,46 @@ export const useTodoStore = defineStore("todos", {
         },
       ],
       filterQuery: {
-        keywords: '',
+        keywords: "",
         status: 0,
         priority: 0,
       },
+      sortKey: '',
+      sortAsc: true,
     };
   },
-
   getters: {
-    filteredTodos: state => {
+    filteredTodos: (state) => {
       let todos = state.todos;
       let status = state.filterQuery.status;
       let priority = state.filterQuery.priority;
+      let keywords = state.filterQuery.keywords;
 
-      if(!(status == 0)) {
-        todos = todos.filter(todo => {
+      if (!(status == 0)) {
+        todos = todos.filter((todo) => {
           return todo.status == status;
         });
       }
-      if(!(priority == 0)) {
-        todos = todos.filter(todo => {
+      if (!(priority == 0)) {
+        todos = todos.filter((todo) => {
           return todo.priority == priority;
         });
       }
+      if (!(keywords == "")) {
+        const lowWords = keywords.toLowerCase();
+        todos = todos.filter((todo) => {
+          return todo.taskName.toLowerCase().includes(lowWords);
+        });
+      }
+
       return todos;
-    }
+    },
   },
   actions: {
     changeFilterQuery(query) {
       this.filterQuery.status = query.status;
       this.filterQuery.priority = query.priority;
+      this.filterQuery.keywords = query.keywords;
     },
     updateTodos({ id, status, taskName, priority, memo }) {
       const updateIndex = this.todos.findIndex((todo) => todo.id == id);
@@ -163,11 +173,27 @@ export const useTodoStore = defineStore("todos", {
       });
     },
     addTodo(todoItem) {
-      console.log(todoItem)
+      console.log(todoItem);
       this.todos.push(todoItem);
     },
     popUp(){
       this.isPopUp = !this.isPopUp
-    }
+    },
+    sortTodos(item) {
+      this.sortKey === item ? (this.sortAsc = !this.sortAsc) : (this.sortAsc = true);
+      this.sortKey = item;
+      if (this.sortKey != '') {
+        this.todos.sort((a, b) => {
+          let set = 1;
+          this.sortAsc ? (set = 1) : (set = -1);
+          a = a[this.sortKey];
+          b = b[this.sortKey];
+          return ( a === b ? 0 : a > b ? 1 : -1 ) * set;
+        });
+        return this.todos;
+      } else {
+        return this.todos;
+      }
+    },
   },
 });
