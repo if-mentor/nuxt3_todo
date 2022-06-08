@@ -1,7 +1,8 @@
-<script setup lang="ts">
+<script setup>
 import { useRouter } from "vue-router";
 import { useTodoStore } from "@/store/index";
 import { computed } from "vue";
+import Toast from "@/components/Toast.vue";
 const store = useTodoStore();
 const router = useRouter();
 //VueRouter設定
@@ -47,12 +48,14 @@ const moveCreatePage = () => {
 </script>
 
 <template>
+
   <div>
     <header>
       <h1 class="text-white bg-gray-500 text-2xl font-sans pl-5 py-3">
         Todoアプリ
       </h1>
     </header>
+
 
     <div class="flex mt-10 ml-5">
       <div class="text-xl">
@@ -158,7 +161,9 @@ const moveCreatePage = () => {
       </div>
     </div>
     <Table @edit-todo="EditTodo" @change-handler="changeHandler" />
+    <Toast>削除されました</Toast>
   </div>
+
 </template>
 
 <style scoped>
@@ -169,4 +174,6 @@ const moveCreatePage = () => {
 .flex {
   display: flex;
 }
+
+
 </style>
